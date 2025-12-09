@@ -3,6 +3,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "@/assets/css/styles.min.css";
 import "@/assets/css/custom.css";
 import { siteMetadata } from "./metadata";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 const poppins = Poppins({
   variable: "--font-primary",
@@ -30,7 +32,8 @@ export default function RootLayout({ children }) {
       <body
         className={`${montserrat.variable} ${poppins.variable} ${hindSiliguri.variable} antialiased template-color-1 spybody white-version`}
       >
-        {children}
+        <Header />
+        {children} <Footer />
       </body>
     </html>
   );

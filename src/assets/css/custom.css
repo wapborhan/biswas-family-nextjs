@@ -40,7 +40,7 @@
 
 .owner img {
   border: 5px solid #1d1e24;
-  width: 50% !important;
+  width: 35% !important;
   margin: 0 auto;
   z-index: 55;
 
@@ -49,4 +49,41 @@
 .rn-portfolio::before:hover,
 .rn-blog::before:hover {
   opacity: 1;
+}
+
+
+/*  */
+
+.form-wrap {
+  background: rgba(255, 255, 255, 1);
+  width: 100%;
+
+  margin: 0 auto;
+  position: relative;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  -webkit-box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.15);
+  -moz-box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.15);
+  box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.15);
+}
+
+.form-wrap:before {
+  content: "";
+  width: 90%;
+  height: calc(100% + 90px);
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  position: absolute;
+  top: -30px;
+  background: #00bcd9;
+  z-index: -1;
+  opacity: 0.8;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  -webkit-box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.15);
+  -moz-box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.15);
+  box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.15);
 }

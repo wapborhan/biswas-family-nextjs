@@ -1,7 +1,7 @@
 import React from "react";
 import MembarCard from "./shared/MembarCard";
 
-const Members = () => {
+const Members = ({ members }) => {
   return (
     <div
       className="rn-service-area rn-section-gap section-separator"
@@ -23,7 +23,10 @@ const Members = () => {
           </div>
         </div>
         <div className="row row--25 mt_md--10 mt_sm--10">
-          <MembarCard />
+          {members &&
+            members.map((member, idx) => {
+              return <MembarCard member={member} key={idx} />;
+            })}
         </div>
       </div>
     </div>
