@@ -5,6 +5,7 @@ import "@/assets/css/custom.css";
 import { siteMetadata } from "./metadata";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import NextAuthSessionProvider from "@/Providers/NextAuthSessionProvider";
 
 const poppins = Poppins({
   variable: "--font-primary",
@@ -32,8 +33,11 @@ export default function RootLayout({ children }) {
       <body
         className={`${montserrat.variable} ${poppins.variable} ${hindSiliguri.variable} antialiased template-color-1 spybody white-version`}
       >
-        <Header />
-        {children} <Footer />
+        <NextAuthSessionProvider>
+          <Header />
+          {children}
+          <Footer />
+        </NextAuthSessionProvider>
       </body>
     </html>
   );

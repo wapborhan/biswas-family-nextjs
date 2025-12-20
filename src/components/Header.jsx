@@ -2,6 +2,8 @@ import Link from "next/link";
 import React from "react";
 
 const Header = () => {
+  const user = null; // Replace with actual user authentication logic
+
   return (
     <header className="rn-header haeder-default black-logo-version header--fixed header--sticky">
       <div className="header-wrapper rn-popup-mobile-menu m--0 row align-items-center">
@@ -34,6 +36,26 @@ const Header = () => {
                   <Link className="nav-link" href="/members">
                     পরিবারের সদস্য
                   </Link>
+                </li>
+
+                <li className="nav-item">
+                  {user ? (
+                    <Link
+                      className="nav-link"
+                      href="/member/add
+                  "
+                    >
+                      ড্যাশবোর্ড
+                    </Link>
+                  ) : (
+                    <Link
+                      className="nav-link"
+                      href="/auth/login
+                  "
+                    >
+                      লগইন
+                    </Link>
+                  )}
                 </li>
 
                 <li className="nav-item">

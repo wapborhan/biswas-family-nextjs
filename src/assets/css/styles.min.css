@@ -94,12 +94,12 @@ body {
 }
 
 body::-webkit-scrollbar {
-  width: 0.9em;
+  width: 0.4em;
 }
 
 body::-webkit-scrollbar-thumb {
   background: linear-gradient(145deg, #ff014f, #d11414);
-  border-radius: 5px;
+  /* border-radius: 5px; */
   outline: 1px solid #708090;
 }
 
