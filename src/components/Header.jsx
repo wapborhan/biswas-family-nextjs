@@ -1,8 +1,10 @@
+"use client";
+import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import React from "react";
 
 const Header = () => {
-  const user = null; // Replace with actual user authentication logic
+  const session = useSession();
 
   return (
     <header className="rn-header haeder-default black-logo-version header--fixed header--sticky">
@@ -37,9 +39,13 @@ const Header = () => {
                     পরিবারের সদস্য
                   </Link>
                 </li>
-
                 <li className="nav-item">
-                  {user ? (
+                  <Link className="nav-link" href="/">
+                    যোগাযোগ
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  {session?.status === "authenticated" ? (
                     <Link
                       className="nav-link"
                       href="/member/add
@@ -57,11 +63,12 @@ const Header = () => {
                     </Link>
                   )}
                 </li>
-
                 <li className="nav-item">
-                  <Link className="nav-link" href="/">
-                    যোগাযোগ
-                  </Link>
+                  {session?.status === "authenticated" && (
+                    <span className="nav-link" onClick={() => signOut()}>
+                      লগআউট
+                    </span>
+                  )}
                 </li>
               </ul>
             </nav>

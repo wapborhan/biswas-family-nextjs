@@ -1,7 +1,6 @@
 import { familyMember } from "@/assets/data/nodes";
 
 const MembarCard = ({ member }) => {
-  console.log(member);
   const {
     id,
     name,

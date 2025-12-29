@@ -21915,6 +21915,12 @@ body.white-version {
   font-weight: 600;
 }
 
+.white-version #sideNav .primary-menu li span {
+  color: var(--color-primary);
+  font-weight: 600;
+  cursor: pointer;
+}
+
 .white-version .section-separator::after {
   background: #dce1e4;
 }

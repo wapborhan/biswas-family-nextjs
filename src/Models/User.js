@@ -17,10 +17,13 @@ const UserSchema = new mongoose.Schema(
     providerAccountId: String,
     image: String,
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+    versionKey: false,
+  }
 );
 
-// Prevent model overwrite issue in Next.js (hot-reloading)
-const User = mongoose.models?.User || mongoose.model("users", UserSchema);
+// ✅ Hot-reload safe
+const User = mongoose.models.User || mongoose.model("User", UserSchema);
 
 export default User;
