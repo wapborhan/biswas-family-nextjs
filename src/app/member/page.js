@@ -7,9 +7,9 @@ const page = () => {
     (member) => member.isClanRoot === true
   );
   return (
-    <div>
+    <>
       <Members members={biswasFamilyMember} />
-    </div>
+    </>
   );
 };
 

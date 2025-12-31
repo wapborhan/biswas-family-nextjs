@@ -47,7 +47,7 @@ export const familyMember = [
         description: "",
       },
     ],
-    spousesIds: [1, 2],
+    spousesIds: [2],
     pictures: "",
     childrensId: [3],
     contact: {
@@ -61,6 +61,7 @@ export const familyMember = [
       website: "",
     },
     isClanRoot: true,
+    isApproved: true,
   },
   {
     id: 2,

@@ -2,14 +2,20 @@
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import React from "react";
+import { usePathname } from "next/navigation";
+import { navItems } from "@/lib/navLinks";
 
 const Header = () => {
-  const session = useSession();
+  const { status } = useSession();
+  const pathname = usePathname();
+
+  const isAuthenticated = status === "authenticated";
 
   return (
     <header className="rn-header haeder-default black-logo-version header--fixed header--sticky">
       <div className="header-wrapper rn-popup-mobile-menu m--0 row align-items-center">
-        <div className="col-lg-2 col-6">
+        {/* Logo */}
+        <div className="col-lg-2 col-md-6 col-6">
           <div className="header-left">
             <div className="logo">
               <Link href="/">
@@ -22,69 +28,66 @@ const Header = () => {
             </div>
           </div>
         </div>
-        <div className="col-lg-10 col-6">
+
+        {/* Menu */}
+        <div className="col-lg-10 col-md-6 col-6">
           <div className="header-center">
             <nav
               id="sideNav"
               className="mainmenu-nav navbar-example2 d-none d-xl-block onepagenav"
             >
               <ul className="primary-menu nav nav-pills">
-                <li className="nav-item current">
-                  <Link className="nav-link" href="/">
-                    নিরপাতা
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link className="nav-link" href="/members">
-                    পরিবারের সদস্য
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link className="nav-link" href="/">
-                    যোগাযোগ
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  {session?.status === "authenticated" ? (
-                    <Link
+                {navItems.map((item, index) => {
+                  // hide dashboard if not logged in
+                  if (item.name === "ড্যাশবোর্ড" && !isAuthenticated)
+                    return null;
+
+                  // hide login if logged in
+                  if (item.name === "লগইন" && isAuthenticated) return null;
+
+                  return (
+                    <li key={index} className="nav-item">
+                      <Link
+                        href={item.path}
+                        className={
+                          pathname === item.path
+                            ? "nav-link active"
+                            : "nav-link"
+                        }
+                      >
+                        {item.name}
+                      </Link>
+                    </li>
+                  );
+                })}
+
+                {/* Logout */}
+                {isAuthenticated && (
+                  <li className="nav-item">
+                    <span
                       className="nav-link"
-                      href="/member/add
-                  "
+                      style={{ cursor: "pointer" }}
+                      onClick={() => signOut()}
                     >
-                      ড্যাশবোর্ড
-                    </Link>
-                  ) : (
-                    <Link
-                      className="nav-link"
-                      href="/auth/login
-                  "
-                    >
-                      লগইন
-                    </Link>
-                  )}
-                </li>
-                <li className="nav-item">
-                  {session?.status === "authenticated" && (
-                    <span className="nav-link" onClick={() => signOut()}>
                       লগআউট
                     </span>
-                  )}
-                </li>
+                  </li>
+                )}
               </ul>
             </nav>
+
+            {/* Mobile Menu */}
             <div className="header-right">
-              {/* <a className="rn-btn" target="_blank">
-                <span>D</span>
-              </a> */}
               <div className="hamberger-menu d-block d-xl-none">
                 <i id="menuBtn" className="feather-menu humberger-menu">
                   <svg viewBox="0 0 100 80" width="40" height="40">
-                    <rect width="100" height="10"></rect>
-                    <rect y="30" width="100" height="10"></rect>
-                    <rect y="60" width="100" height="10"></rect>
+                    <rect width="100" height="10" />
+                    <rect y="30" width="100" height="10" />
+                    <rect y="60" width="100" height="10" />
                   </svg>
                 </i>
               </div>
+
               <div className="close-menu d-block">
                 <span className="closeTrigger">
                   <svg
@@ -99,8 +102,8 @@ const Header = () => {
                     strokeLinejoin="round"
                     className="feather feather-x"
                   >
-                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                    <line x1="18" y1="6" x2="6" y2="18" />
+                    <line x1="6" y1="6" x2="18" y2="18" />
                   </svg>
                 </span>
               </div>

@@ -6436,7 +6436,7 @@ textarea {
   -webkit-transition: all 0.4s ease-out 0s;
   transition: all 0.4s ease-out 0s;
   color: var(--color-body);
-  width: 100%;
+  /* width: 100%; */
 }
 
 input:focus,
@@ -17613,7 +17613,8 @@ div#featured-project-carousel {
 }
 
 .client-card .main-content .thumbnail {
-  height: 150px;
+  /* height: 150px; */
+  font-size: 50px;
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
@@ -17623,7 +17624,7 @@ div#featured-project-carousel {
   -webkit-box-pack: center;
   -ms-flex-pack: center;
   justify-content: center;
-  padding: 30px;
+  padding: 15px;
 }
 
 .client-card .main-content .thumbnail a {
@@ -17851,7 +17852,7 @@ div#featured-project-carousel {
   margin-top: 0;
   display: -webkit-box;
   display: -ms-flexbox;
-  display: flex;
+  display: block;
   -webkit-box-pack: center;
   -ms-flex-pack: center;
   justify-content: center;
@@ -17886,8 +17887,8 @@ div#featured-project-carousel {
 }
 
 .rn-client-style-2 .client-card .main-content {
-  -ms-flex-preferred-size: 25%;
-  flex-basis: 25%;
+  -ms-flex-preferred-size: 20%;
+  flex-basis: 20%;
 }
 
 @media only screen and (max-width: 767px) {
@@ -21486,6 +21487,18 @@ body.white-version {
   -webkit-box-shadow: var(--shadow-white-3);
   box-shadow: var(--shadow-white-3);
 }
+
+.white-version .left-header-style .logo-area h5,
+.white-version .left-header-style .logo-area h6 {
+  color: var(--color-body-white);
+}
+
+.white-version .left-header-style .logo-area h5 {
+  margin-top: 25px;
+  font-size: 25px;
+}
+
+
 
 .white-version .left-header-style #sideNavs .primary-menu li a {
   color: var(--color-body-white);

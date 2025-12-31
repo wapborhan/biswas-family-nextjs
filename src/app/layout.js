@@ -3,9 +3,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "@/assets/css/styles.min.css";
 import "@/assets/css/custom.css";
 import { siteMetadata } from "./metadata";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 import NextAuthSessionProvider from "@/Providers/NextAuthSessionProvider";
+import MainWrapper from "@/Providers/MainWrapper";
 
 const poppins = Poppins({
   variable: "--font-primary",
@@ -34,9 +33,7 @@ export default function RootLayout({ children }) {
         className={`${montserrat.variable} ${poppins.variable} ${hindSiliguri.variable} antialiased template-color-1 spybody white-version`}
       >
         <NextAuthSessionProvider>
-          <Header />
-          {children}
-          <Footer />
+          <MainWrapper>{children}</MainWrapper>
         </NextAuthSessionProvider>
       </body>
     </html>

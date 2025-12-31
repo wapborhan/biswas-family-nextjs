@@ -2,7 +2,7 @@ import { familyMember } from "@/assets/data/nodes";
 
 const MembarCard = ({ member }) => {
   const {
-    id,
+    _id,
     name,
     fatherId,
     motherId,
@@ -31,7 +31,7 @@ const MembarCard = ({ member }) => {
           <div className="content">
             <div className="head text-center">
               <h4 className="title text-uppercase mb-2">
-                <a href={`member/${id}`}>{name}</a>
+                <a href={`member/${_id}`}>{name}</a>
               </h4>
               {isMainRoot ? (
                 <>

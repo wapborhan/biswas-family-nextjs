@@ -21,6 +21,7 @@ export const authOptions = {
           existingUser = await User.create({
             name: user.name,
             email: user.email,
+            username: user.email.split("@")[0],
             role: "user",
             providerAccountId: account.providerAccountId,
             provider: account.provider,
