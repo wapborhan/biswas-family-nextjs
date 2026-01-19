@@ -3,12 +3,16 @@ import { NextResponse } from "next/server";
 
 export const GET = async () => {
   try {
-    const members = await Member.find({});
+    const members = await Member.find({})
+      .populate("fatherId")
+      .populate("motherId")
+      .populate("spousesIds", "name")
+      .populate("childrensId");
 
     if (!members.length) {
       return NextResponse.json(
         { message: "No records found" },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -21,7 +25,7 @@ export const GET = async () => {
     console.error("Database error:", error);
     return NextResponse.json(
       { error: "Internal Server Error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 };
@@ -41,7 +45,7 @@ export const POST = async (request) => {
     console.error("Database error:", error);
     return NextResponse.json(
       { error: "Internal Server Error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 };

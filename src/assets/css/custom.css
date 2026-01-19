@@ -71,7 +71,7 @@
 .form-wrap:before {
   content: "";
   width: 90%;
-  height: calc(100% + 90px);
+  height: calc(100% + 60px);
   left: 0;
   right: 0;
   margin: 0 auto;
@@ -172,4 +172,25 @@
 .badge-light {
   color: #212529;
   background-color: #f8f9fa;
+}
+
+.react-datepicker-popper {
+  z-index: 99 !important;
+}
+
+.react-datepicker {
+  font-size: 1.3rem !important;
+}
+
+.react-datepicker-wrapper {
+  display: block !important;
+}
+
+.react-datepicker__time-container {
+  width: 120px !important;
+
+}
+
+.react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box {
+  width: 100% !important;
 }

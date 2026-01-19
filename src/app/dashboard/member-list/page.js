@@ -1,10 +1,10 @@
-import { familyMember } from "@/assets/data/nodes";
 import React from "react";
 import MembersTable from "./MembersTable";
+import { fetchMembers } from "@/lib/fetchMembers";
 
-const page = () => {
+const page = async () => {
   // example: fetch only clan root or all members
-  const members = familyMember;
+  const members = await fetchMembers();
 
   return (
     <div

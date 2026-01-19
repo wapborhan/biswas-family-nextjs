@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+const { Schema } = mongoose;
 
 const OccupationSchema = new mongoose.Schema(
   {
@@ -8,7 +9,7 @@ const OccupationSchema = new mongoose.Schema(
     startDate: { type: String },
     endDate: { type: String },
   },
-  { _id: false }
+  { _id: false },
 );
 
 const RewardSchema = new mongoose.Schema(
@@ -17,7 +18,7 @@ const RewardSchema = new mongoose.Schema(
     year: { type: String },
     description: { type: String },
   },
-  { _id: false }
+  { _id: false },
 );
 
 const MemberSchema = new mongoose.Schema(
@@ -29,13 +30,15 @@ const MemberSchema = new mongoose.Schema(
     },
 
     fatherId: {
-      type: Number,
-      default: 0,
+      type: Schema.Types.ObjectId,
+      ref: "Member",
+      default: null,
     },
 
     motherId: {
-      type: Number,
-      default: 0,
+      type: Schema.Types.ObjectId,
+      ref: "Member",
+      default: null,
     },
 
     gender: {
@@ -85,13 +88,15 @@ const MemberSchema = new mongoose.Schema(
 
     spousesIds: [
       {
-        type: Number,
+        type: Schema.Types.ObjectId,
+        ref: "Member",
       },
     ],
 
     childrensId: [
       {
-        type: Number,
+        type: Schema.Types.ObjectId,
+        ref: "Member",
       },
     ],
 
@@ -124,7 +129,7 @@ const MemberSchema = new mongoose.Schema(
   {
     timestamps: true,
     versionKey: false,
-  }
+  },
 );
 
 // Prevent model overwrite in Next.js

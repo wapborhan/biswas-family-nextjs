@@ -9,7 +9,6 @@ const SideBar = () => {
   const session = useSession();
   const pathname = usePathname();
   const user = session?.data?.user;
-  console.log(user);
   const { image, name, email } = user || {};
 
   return (

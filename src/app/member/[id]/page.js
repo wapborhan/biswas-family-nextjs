@@ -1,12 +1,16 @@
 import { familyMember } from "@/assets/data/nodes";
+import { fetchMembers } from "@/lib/fetchMembers";
 import Link from "next/link";
 import React from "react";
 
 const Page = async ({ params }) => {
   const { id } = await params;
+  const biswasFamilyMember = await fetchMembers();
 
-  const user = familyMember.find((member) => member.id == id);
-
+  const user = biswasFamilyMember.find((member) => member._id == id);
+  if (!user) {
+    return <div className="p-4 text-red-500">Member not found</div>;
+  }
   const { name, fatherId, motherId, birthDate, deathDate, gender, isMainRoot } =
     user;
 
@@ -154,16 +158,13 @@ const Page = async ({ params }) => {
                   <div className="inner slide">
                     <div className="d-flex justify-content-left flex-wrap">
                       <span className="badge bg-success mt-3">
-                        Followers: {user?.profile?.followers}
+                        স্ত্রী: {user?.profile?.followers}
                       </span>
                       <span className="badge bg-warning ms-3 mt-3">
-                        Following: {user?.profile?.following}
+                        ছেলে সন্তান: {user?.profile?.following}
                       </span>
                       <span className="badge bg-primary ms-3 mt-3">
-                        Public Repos: {user?.profile?.public_repos}
-                      </span>
-                      <span className="badge bg-info ms-3 mt-3">
-                        Public Gists: {user?.profile?.public_gists}
+                        মেয়ে সন্তান: {user?.profile?.public_repos}
                       </span>
                     </div>
                     <div className="skill-share-inner ">
@@ -191,27 +192,6 @@ const Page = async ({ params }) => {
                   </div>
                 </div>
                 {/* <!-- End skiull area -->/ */}
-              </div>
-            </div>
-            <div className="col-md-12">
-              <div className="navs text-center d-flex justify-content-center">
-                <ul className="d-flex">
-                  <Link href="overview">
-                    <li>Overview</li>
-                  </Link>
-                  <Link href="repo">
-                    <li>Repositories ({user?.profile?.public_repos})</li>
-                  </Link>
-                  <Link href="followers">
-                    <li>Followers ({user?.profile?.followers})</li>
-                  </Link>
-                  <Link href="following">
-                    <li>Following ({user?.profile?.following})</li>
-                  </Link>
-                  <Link href="starred">
-                    <li>Starred </li>
-                  </Link>
-                </ul>
               </div>
             </div>
           </div>

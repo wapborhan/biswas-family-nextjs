@@ -25,6 +25,7 @@ async function dbConnect() {
       .connect(MONGODB_URI, {
         dbName: process.env.DB_NAME, // ✅ equivalent to your `client.db(DB_NAME)`
         bufferCommands: false,
+        serverSelectionTimeoutMS: 5000,
       })
       .then((mongoose) => mongoose);
   }

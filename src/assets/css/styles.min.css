@@ -6906,16 +6906,16 @@ input[type="radio"]~label::after {
   font-weight: 500;
 }
 
-.form-group input {
-  border: 0 none;
+.form-group input,
+.form-group select {
+  border: 1px solid #b2b2b2;
   border-radius: 4px;
   height: 50px;
   font-size: var(--font-size-b2);
   -webkit-transition: var(--transition);
   transition: var(--transition);
   padding: 0 20px;
-  background-color: var(--color-lightest);
-  border: 1px solid transparent;
+  /* background-color: var(--color-lightest); */
   transition: var(--transition);
 }
 
@@ -13338,6 +13338,22 @@ button.rn-btn {
   text-decoration: none;
   color: var(--color-primary);
 }
+
+.white-version a.rn-btn,
+.white-version button.rn-btn {
+  border-radius: 6px;
+  background: var(--color-primary);
+  -webkit-box-shadow: var(--shadow-3);
+  box-shadow: var(--shadow-3);
+  -webkit-transition: var(--transition);
+  transition: var(--transition);
+  position: relative;
+  z-index: 2;
+  font-size: 14px;
+  font-weight: 500;
+  border: 0 none;
+}
+
 
 a.rn-btn,
 button.rn-btn {
