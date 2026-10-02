@@ -1,34 +1,26 @@
-import React from "react";
 import MembarCard from "./shared/MembarCard";
 
-const Members = ({ members }) => {
+const Members = ({ members, isLoading }) => {
+  const hasMembers = Array.isArray(members) && members.length > 0;
   return (
-    <div
-      className="rn-service-area rn-section-gap section-separator"
-      id="features"
-    >
-      <div className="container">
-        <div className="row">
-          <div className="col-lg-12">
-            <div
-              className="section-title text-center aos-init aos-animate"
-              data-aos="fade-up"
-              data-aos-duration="500"
-              data-aos-delay="100"
-              data-aos-once="true"
-            >
-              <span className="subtitle">বিশ্বাস বংশের </span>
-              <h2 className="title"> সদস্য</h2>
-            </div>
-          </div>
+    <div className="row row--25 mt_md--10 mt_sm--10">
+      {/* 🔄 Loading */}
+      {isLoading && (
+        <div className="col-12 text-center">
+          <h4>লোড হচ্ছে...</h4>
         </div>
-        <div className="row row--25 mt_md--10 mt_sm--10">
-          {members &&
-            members.map((member, idx) => {
-              return <MembarCard member={member} key={idx} />;
-            })}
+      )}
+
+      {/* ❌ No members */}
+      {!isLoading && !hasMembers && (
+        <div className="col-12 text-center">
+          <h4 className="text-black">কোনো সদস্য পাওয়া যায়নি</h4>
         </div>
-      </div>
+      )}
+
+      {/* ✅ Members list */}
+      {hasMembers &&
+        members.map((member, idx) => <MembarCard member={member} key={idx} />)}
     </div>
   );
 };

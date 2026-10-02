@@ -1,16 +1,20 @@
-import { familyMember } from "@/assets/data/nodes";
+import { calculateAge } from "@/lib/calculateAge";
+import { fetchMembers } from "@/lib/fetchMembers";
+import { formatDate } from "@/lib/formateDate";
 
-const MembarCard = ({ member }) => {
+const MembarCard = async ({ member }) => {
   const {
     _id,
-    name,
+    fullName,
     fatherId,
     motherId,
-    birthDate,
-    deathDate,
+    birth,
+    death,
     gender,
     isMainRoot,
   } = member;
+
+  const familyMember = await fetchMembers();
 
   const fatherData = familyMember.find((m) => m.id === fatherId);
   const motherData = familyMember.find((m) => m.id === motherId);
@@ -31,28 +35,28 @@ const MembarCard = ({ member }) => {
           <div className="content">
             <div className="head text-center">
               <h4 className="title text-uppercase mb-2">
-                <a href={`member/${_id}`}>{name}</a>
+                <a href={`member/${_id}`}>{fullName}</a>
               </h4>
               {isMainRoot ? (
                 <>
                   <h4 className="title text-uppercase">
-                    পিতাঃ {fatherData ? fatherData.name : "অজানা"}
+                    পিতাঃ {fatherData ? fatherData.fullName : "অজানা"}
                   </h4>
                   <h4 className="title text-uppercase  mb-3">
-                    মাতাঃ {motherData ? motherData.name : "অজানা"}
+                    মাতাঃ {motherData ? motherData.fullName : "অজানা"}
                   </h4>
                 </>
               ) : (
                 <>
                   <h4 className="title text-uppercase">
                     {gender === "male" ? (
-                      <>পিতাঃ {fatherData ? fatherData.name : "অজানা"} </>
+                      <>পিতাঃ {fatherData ? fatherData.fullName : "অজানা"} </>
                     ) : (
                       <>স্বামীঃ</>
                     )}
                   </h4>
                   <h4 className="title text-uppercase mb-3">
-                    মাতাঃ {motherData ? motherData.name : "অজানা"}
+                    মাতাঃ {motherData ? motherData.fullName : "অজানা"}
                   </h4>
                 </>
               )}
@@ -60,11 +64,13 @@ const MembarCard = ({ member }) => {
             <div className="category-info p-0">
               <div className="card-btn-container d-flex justify-content-between w-100">
                 <span className="btn card-btn" style={{ cursor: "default" }}>
-                  জন্মঃ {birthDate}
+                  জন্মঃ {birth ? formatDate(birth?.date) : "অজানা"}
                 </span>
 
                 <span className="btn card-btn" style={{ cursor: "default" }}>
-                  মৃত্যুঃ {deathDate}
+                  {death?.date
+                    ? `মৃত্যুঃ ${formatDate(death?.date)}`
+                    : `বয়সঃ ${calculateAge(birth?.date)} বছর`}
                 </span>
               </div>
             </div>

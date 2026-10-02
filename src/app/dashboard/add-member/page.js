@@ -3,8 +3,9 @@ import Form from "./Form";
 
 const AddMemberPage = async () => {
   const members = await fetchMembers();
-  const malemembers =
-    members && members.filter((member) => member.gender === "male");
+  const malemembers = members
+    ? members?.filter((member) => member.gender === "male")
+    : [];
 
   return (
     <div className="rn-service-area rn-section-gap section-separator">

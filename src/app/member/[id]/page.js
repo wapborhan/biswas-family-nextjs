@@ -1,21 +1,25 @@
-import { familyMember } from "@/assets/data/nodes";
 import { fetchMembers } from "@/lib/fetchMembers";
-import Link from "next/link";
-import React from "react";
+import About from "./About";
+import Education from "./Education";
 
 const Page = async ({ params }) => {
   const { id } = await params;
   const biswasFamilyMember = await fetchMembers();
 
   const user = biswasFamilyMember.find((member) => member._id == id);
+
   if (!user) {
     return <div className="p-4 text-red-500">Member not found</div>;
   }
-  const { name, fatherId, motherId, birthDate, deathDate, gender, isMainRoot } =
-    user;
-
-  const fatherData = familyMember.find((m) => m.id === fatherId);
-  const motherData = familyMember.find((m) => m.id === motherId);
+  const {
+    fullName,
+    fatherId,
+    motherId,
+    birthDate,
+    deathDate,
+    gender,
+    isMainRoot,
+  } = user;
 
   return (
     <div className="main-page-wrapper">
@@ -35,18 +39,21 @@ const Page = async ({ params }) => {
               <div className="header-left">
                 <div className="header-thumbnail">
                   <img
+                    className="rounded-full bg-white pt-2"
                     src={
-                      user?.pictures
-                        ? user?.pictures
-                        : "https://freesvg.org/img/Male-Avatar.png"
+                      user?.profilePic
+                        ? user?.profilePic
+                        : user?.gender === "male"
+                          ? "https://freesvg.org/img/Male-Avatar.png"
+                          : "https://freesvg.org/img/Female-Avatar.png"
                     }
-                    alt={name}
+                    alt={fullName}
                   />
                 </div>
                 <div className="header-info-content">
                   <h4 className="title">
                     <a href={user?.profile?.html_url}>
-                      {name}
+                      {fullName}
                       {/* <FaExternalLinkAlt className="ms-3" /> */}
                     </a>
                   </h4>
@@ -54,23 +61,23 @@ const Page = async ({ params }) => {
                     {isMainRoot ? (
                       <>
                         <div className="status-info mb-3">
-                          পিতাঃ {fatherData ? fatherData.name : "অজানা"}
+                          পিতাঃ {fatherId ? fatherId.fullName : "অজানা"}
                         </div>
                         <div className="status-info mb-3">
-                          মাতাঃ {motherData ? motherData.name : "অজানা"}
+                          মাতাঃ {motherId ? motherId.fullName : "অজানা"}
                         </div>
                       </>
                     ) : (
                       <>
                         <div className="status-info mb-3">
                           {gender === "male" ? (
-                            <>পিতাঃ {fatherData ? fatherData.name : "অজানা"} </>
+                            <>পিতাঃ {fatherId ? fatherId.fullName : "অজানা"} </>
                           ) : (
                             <>স্বামীঃ</>
                           )}
                         </div>
                         <div className="status-info mb-3">
-                          মাতাঃ {motherData ? motherData.name : "অজানা"}
+                          মাতাঃ {motherId ? motherId.fullName : "অজানা"}
                         </div>
                       </>
                     )}
@@ -195,6 +202,8 @@ const Page = async ({ params }) => {
               </div>
             </div>
           </div>
+          <About />
+          <Education />
         </div>
       </div>
     </div>

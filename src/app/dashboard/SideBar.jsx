@@ -9,14 +9,18 @@ const SideBar = () => {
   const session = useSession();
   const pathname = usePathname();
   const user = session?.data?.user;
-  const { image, name, email } = user || {};
+  const { name } = user || {};
 
   return (
     <div className="d-none d-xl-block header-style-2">
       <header className="rn-header-area d-flex align-items-start flex-column left-header-style">
         <div className="logo-area">
           <Link href="/">
-            <img src={image} alt="personal-logo" className="w-100" />
+            <img
+              src="https://www.wapborhan.com/_next/image?url=%2Fwb-logo.png&w=640&q=75"
+              alt="WB"
+              className="w-100"
+            />
           </Link>
           <h5>{name}</h5>
         </div>

@@ -194,3 +194,18 @@
 .react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box {
   width: 100% !important;
 }
+
+
+.glass-effect {
+  background: radial-gradient(#fff2 30%, #fff4);
+  border-radius: 20px;
+  box-shadow: 0 0 20px -5px #acacac77;
+  backdrop-filter: blur(5px);
+  overflow: hidden;
+  transition: transform .25s;
+}
+
+.header-wrapper {
+  height: 85px !important;
+  margin-top: 15px;
+}

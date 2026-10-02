@@ -1,0 +1,66 @@
+[
+  {
+    "id": 1,
+    "name": "মোঃ মকবুল হাজি বিশ্বাস",
+    "fatherId": 0,
+    "motherId": 0,
+    "gender": "male",
+    "birth": {
+      "date": "",
+      "time": "",
+      "place": "নবগঙ্গা , সাতবাড়িয়া, ভেরামারা, কুষ্টিয়া"
+    },
+    "weeding": {
+      "date": "",
+      "time": "",
+      "place": ""
+    },
+    "death": {
+      "date": "",
+      "time": "",
+      "place": ""
+    },
+    "bloodGroup": "",
+    "address": {
+      "presentAddress": "নবগঙ্গা, সাতবাড়িয়া, ভেরামারা, কুষ্টিয়া",
+      "permanentAddress": "নবগঙ্গা, সাতবাড়িয়া, ভেরামারা, কুষ্টিয়া"
+    },
+    "education": {
+      "primarySchool": "",
+      "secondarySchool": "",
+      "higherSecondarySchool": "",
+      "university": ""
+    },
+    "occupation": [
+      {
+        "title": "কৃষক",
+        "organization": "N/A",
+        "location": "N/A",
+        "startDate": "",
+        "endDate": ""
+      }
+    ],
+    "rewards": [
+      {
+        "title": "",
+        "year": "",
+        "description": ""
+      }
+    ],
+    "spousesIds": [2],
+    "pictures": "",
+    "childrensId": [3],
+    "contact": {
+      "mobileNo": "",
+      "whatsapp": "",
+      "email": "",
+      "facebook": "",
+      "twitter": "",
+      "instagram": "",
+      "linkedin": "",
+      "website": ""
+    },
+    "isClanRoot": true,
+    "isApproved": true
+  }
+]

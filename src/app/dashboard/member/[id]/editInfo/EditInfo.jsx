@@ -1,17 +1,21 @@
 "use client";
 
-import { useForm, Controller } from "react-hook-form";
+import React from "react";
+import { Controller, useForm } from "react-hook-form";
 import Select from "react-select";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 import { useMemo } from "react";
+import DatePicker from "react-datepicker";
+import { setHours, setMinutes } from "date-fns";
+import PickDate from "@/components/shared/PickDate";
 
 const genderOptions = [
   { value: "male", label: "পুরুষ" },
   { value: "female", label: "মহিলা" },
 ];
 
-const Form = ({ malemembers }) => {
+const bloodGroups = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
+
+const EditInfo = ({ malemembers }) => {
   const {
     register,
     handleSubmit,
@@ -26,7 +30,7 @@ const Form = ({ malemembers }) => {
     () =>
       malemembers.map((member) => ({
         value: member._id,
-        label: member.fullName,
+        label: member.name,
       })),
     [malemembers],
   );
@@ -44,7 +48,7 @@ const Form = ({ malemembers }) => {
 
     return father.spousesIds.map((wife) => ({
       value: wife._id,
-      label: wife.fullName,
+      label: wife.name,
     }));
   }, [selectedFather, malemembers]);
 
@@ -61,7 +65,7 @@ const Form = ({ malemembers }) => {
       className="row rwt-dynamic-form mt-5 form-wrap p-5"
     >
       {/* NAME */}
-      <div className="col-lg-12">
+      <div className="col-lg-8">
         <div className="form-group">
           <label>নাম</label>
           <input
@@ -73,54 +77,6 @@ const Form = ({ malemembers }) => {
           )}
         </div>
       </div>
-
-      {/* FATHER */}
-      <div className="col-lg-4">
-        <div className="form-group">
-          <label>পিতা</label>
-          <Controller
-            name="father"
-            control={control}
-            render={({ field }) => (
-              <Select
-                {...field}
-                options={fatherOptions}
-                placeholder="পিতা নির্বাচন করুন"
-                isClearable
-                onChange={(val) => {
-                  field.onChange(val);
-                  setValue("mother", null); // 🔥 reset mother
-                }}
-              />
-            )}
-          />
-        </div>
-      </div>
-
-      {/* MOTHER (FILTERED BY FATHER) */}
-      <div className="col-lg-4">
-        <div className="form-group">
-          <label>মাতা</label>
-          <Controller
-            name="mother"
-            control={control}
-            render={({ field }) => (
-              <Select
-                {...field}
-                options={motherOptions}
-                placeholder={
-                  selectedFather
-                    ? "মাতা নির্বাচন করুন"
-                    : "আগে পিতা নির্বাচন করুন"
-                }
-                isDisabled={!selectedFather}
-                isClearable
-              />
-            )}
-          />
-        </div>
-      </div>
-
       {/* GENDER */}
       <div className="col-lg-4">
         <div className="form-group">
@@ -134,6 +90,7 @@ const Form = ({ malemembers }) => {
                 {...field}
                 options={genderOptions}
                 placeholder="লিঙ্গ নির্বাচন করুন"
+                classNamePrefix="select-input"
               />
             )}
           />
@@ -141,83 +98,132 @@ const Form = ({ malemembers }) => {
             <small className="text-danger">{errors.gender.message}</small>
           )}
         </div>
+      </div>{" "}
+      {/* FATHER */}
+      <div className="col-lg-4">
+        <div className="form-group">
+          <label>পিতা</label>
+          <Controller
+            name="father"
+            control={control}
+            render={({ field }) => (
+              <Select
+                {...field}
+                options={fatherOptions}
+                placeholder="পিতা নির্বাচন করুন"
+                classNamePrefix="select-input"
+                isClearable
+                onChange={(val) => {
+                  field.onChange(val);
+                  setValue("mother", null); // 🔥 reset mother
+                }}
+              />
+            )}
+          />
+        </div>
       </div>
+      {/* MOTHER (FILTERED BY FATHER) */}
+      <div className="col-lg-4">
+        <div className="form-group">
+          <label>মাতা</label>
+          <Controller
+            name="mother"
+            control={control}
+            render={({ field }) => (
+              <Select
+                {...field}
+                options={motherOptions}
+                classNamePrefix="select-input"
+                placeholder={
+                  selectedFather
+                    ? "মাতা নির্বাচন করুন"
+                    : "আগে পিতা নির্বাচন করুন"
+                }
+                isDisabled={!selectedFather}
+                isClearable
+              />
+            )}
+          />
+        </div>
+      </div>
+      <div className="col-lg-4">
+        <div className="form-group">
+          <label>রক্তের গ্রুপ</label>
 
+          <Controller
+            name="bloodGroup"
+            control={control}
+            rules={{ required: "রক্তের গ্রুপ নির্বাচন করুন" }}
+            render={({ field }) => (
+              <Select
+                options={bloodGroups.map((b) => ({
+                  value: b,
+                  label: b,
+                }))}
+                placeholder="রক্তের গ্রুপ নির্বাচন করুন"
+                classNamePrefix="select-input"
+                value={bloodGroups
+                  .map((b) => ({
+                    value: b,
+                    label: b,
+                  }))
+                  .find((option) => option.value === field.value)}
+                onChange={(selectedOption) =>
+                  field.onChange(selectedOption?.value)
+                }
+              />
+            )}
+          />
+
+          {errors.bloodGroup && (
+            <small className="text-danger">{errors.bloodGroup.message}</small>
+          )}
+        </div>
+      </div>
       {/* BIRTH DATE */}
       <div className="col-lg-4">
         <div className="form-group">
-          <label>জন্ম তারিখ</label>
+          <label>জন্ম তারিখ ও সময়</label>
           <Controller
-            name="birthDate"
+            name="birth.dateTime"
             control={control}
             render={({ field }) => (
-              <DatePicker
-                className="form-control"
+              <PickDate
                 selected={field.value}
-                onChange={field.onChange}
-                dateFormat="dd/MM/yyyy"
-                placeholderText="তারিখ নির্বাচন করুন"
+                onChange={(date) => field.onChange(date)}
+                placeholder="Birth Date & Time"
               />
             )}
           />
         </div>
       </div>
-
-      {/* BIRTH TIME */}
-      <div className="col-lg-4">
-        <div className="form-group">
-          <label>জন্ম সময়</label>
-          <Controller
-            name="birthTime"
-            control={control}
-            render={({ field }) => (
-              <DatePicker
-                className="form-control"
-                selected={field.value}
-                onChange={field.onChange}
-                showTimeSelect
-                showTimeSelectOnly
-                timeIntervals={5}
-                timeCaption="সময়"
-                dateFormat="hh:mm aa"
-                placeholderText="সময় নির্বাচন করুন"
-              />
-            )}
-          />
-        </div>
-      </div>
-
-      {/* BIRTH PLACE */}
-      <div className="col-lg-4">
+      <div className="col-lg-8">
         <div className="form-group">
           <label>জন্মস্থান</label>
           <input {...register("birthPlace")} className="form-control" />
         </div>
       </div>
-
       {/* ADDRESS */}
-      <div className="col-lg-6">
+      <div className="col-lg-12">
         <div className="form-group">
           <label>বর্তমান ঠিকানা</label>
           <input {...register("presentAddress")} className="form-control" />
         </div>
       </div>
-
-      <div className="col-lg-6">
+      <div className="col-lg-12">
         <div className="form-group">
           <label>স্থায়ী ঠিকানা</label>
           <input {...register("permanentAddress")} className="form-control" />
         </div>
       </div>
-
       {/* BUTTON */}
       <div className="col-12 mt-5">
         <button type="submit" className="rn-btn w-100">
-          <span>সদস্য যুক্ত করুণ</span>
+          <span>ব্যক্তিগত বিবরণ আপডেট করুণ</span>
         </button>
       </div>
     </form>
   );
 };
 
-export default Form;
+export default EditInfo;

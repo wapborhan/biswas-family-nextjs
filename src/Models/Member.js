@@ -1,33 +1,46 @@
 import mongoose from "mongoose";
 const { Schema } = mongoose;
 
-const OccupationSchema = new mongoose.Schema(
+/* ================= Occupation ================= */
+const OccupationSchema = new Schema(
   {
     title: { type: String, trim: true },
     organization: { type: String, trim: true },
     location: { type: String, trim: true },
-    startDate: { type: String },
-    endDate: { type: String },
+    startDate: { type: Date, default: null },
+    endDate: { type: Date, default: null },
   },
   { _id: false },
 );
 
-const RewardSchema = new mongoose.Schema(
+/* ================= Reward ================= */
+const RewardSchema = new Schema(
   {
-    title: { type: String },
-    year: { type: String },
-    description: { type: String },
+    title: { type: String, trim: true },
+    year: { type: String, trim: true },
+    description: { type: String, trim: true },
   },
   { _id: false },
 );
 
-const MemberSchema = new mongoose.Schema(
+/* ================= Education ================= */
+const EducationSchema = new Schema(
   {
-    name: {
+    level: {
       type: String,
+      enum: ["primary", "secondary", "higher-secondary", "university"],
       required: true,
-      trim: true,
     },
+    institute: { type: String, trim: true },
+    passingYear: { type: String, trim: true },
+  },
+  { _id: false },
+);
+
+/* ================= Member ================= */
+const MemberSchema = new Schema(
+  {
+    fullName: { type: String, required: true, trim: true },
 
     fatherId: {
       type: Schema.Types.ObjectId,
@@ -47,42 +60,50 @@ const MemberSchema = new mongoose.Schema(
       required: true,
     },
 
-    birth: {
-      date: String,
-      time: String,
-      place: String,
+    bloodGroup: {
+      type: String,
+      trim: true,
     },
 
-    weeding: {
-      date: String,
-      time: String,
-      place: String,
+    birth: {
+      dateTime: { type: Date, default: null },
+      place: { type: String, trim: true },
+    },
+
+    wedding: {
+      dateTime: { type: Date, default: null },
+      place: { type: String, trim: true },
     },
 
     death: {
-      date: String,
-      time: String,
-      place: String,
-    },
-
-    bloodGroup: {
-      type: String,
-      default: "",
+      dateTime: { type: Date, default: null },
+      place: { type: String, trim: true },
     },
 
     address: {
-      presentAddress: String,
-      permanentAddress: String,
+      present: {
+        village: String,
+        postOffice: String,
+        policeStation: String,
+        district: String,
+        division: String,
+        country: { type: String, default: "Bangladesh" },
+        postalCode: String,
+      },
+      permanent: {
+        village: String,
+        postOffice: String,
+        policeStation: String,
+        district: String,
+        division: String,
+        country: { type: String, default: "Bangladesh" },
+        postalCode: String,
+      },
     },
 
-    education: {
-      primarySchool: String,
-      secondarySchool: String,
-      higherSecondarySchool: String,
-      university: String,
-    },
+    education: [EducationSchema],
 
-    occupation: [OccupationSchema],
+    occupations: [OccupationSchema],
 
     rewards: [RewardSchema],
 
@@ -93,27 +114,31 @@ const MemberSchema = new mongoose.Schema(
       },
     ],
 
-    childrensId: [
+    childrensIds: [
       {
         type: Schema.Types.ObjectId,
         ref: "Member",
       },
     ],
 
-    pictures: {
-      type: String,
-      default: "",
-    },
+    pictures: [
+      {
+        url: { type: String, trim: true },
+        caption: { type: String, trim: true },
+      },
+    ],
+
+    profilePic: { type: String, trim: true },
 
     contact: {
-      mobileNo: String,
-      whatsapp: String,
-      email: String,
-      facebook: String,
-      twitter: String,
-      instagram: String,
-      linkedin: String,
-      website: String,
+      mobileNo: { type: String, trim: true },
+      whatsapp: { type: String, trim: true },
+      email: { type: String, trim: true, lowercase: true },
+      facebook: { type: String, trim: true },
+      twitter: { type: String, trim: true },
+      instagram: { type: String, trim: true },
+      linkedin: { type: String, trim: true },
+      website: { type: String, trim: true },
     },
 
     isClanRoot: {
@@ -132,7 +157,5 @@ const MemberSchema = new mongoose.Schema(
   },
 );
 
-// Prevent model overwrite in Next.js
-const Member = mongoose.models.Member || mongoose.model("Member", MemberSchema);
-
-export default Member;
+/* Prevent model overwrite in Next.js */
+export default mongoose.models.Member || mongoose.model("Member", MemberSchema);

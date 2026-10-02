@@ -58,5 +58,5 @@ export const authOptions = {
     signIn: "/auth/login",
   },
 
-  debug: true,
+  // debug: true,
 };

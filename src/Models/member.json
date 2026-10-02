@@ -1,0 +1,106 @@
+{
+  "fullName": "মোঃ মকবুল হাজি বিস্বাস",
+
+  "fatherId": null,
+  "motherId": null,
+
+  "gender": "male",
+
+  "bloodGroup": "B+",
+
+  "birth": {
+    "dateTime": "1998-04-15T00:00:00.000Z",
+    "place": "Sylhet, Bangladesh"
+  },
+
+  "wedding": {
+    "dateTime": null,
+    "place": ""
+  },
+
+  "death": {
+    "dateTime": null,
+    "place": ""
+  },
+
+  "address": {
+    "present": {
+      "village": "Amberkhana",
+      "postOffice": "Sylhet GPO",
+      "policeStation": "Kotwali",
+      "district": "Sylhet",
+      "division": "Sylhet",
+      "country": "Bangladesh",
+      "postalCode": "3100"
+    },
+    "permanent": {
+      "village": "Beanibazar",
+      "postOffice": "Beanibazar",
+      "policeStation": "Beanibazar",
+      "district": "Sylhet",
+      "division": "Sylhet",
+      "country": "Bangladesh",
+      "postalCode": "3170"
+    }
+  },
+
+  "education": [
+    {
+      "level": "secondary",
+      "institute": "Beanibazar High School",
+      "passingYear": "2014"
+    },
+    {
+      "level": "higher-secondary",
+      "institute": "Sylhet Govt College",
+      "passingYear": "2016"
+    },
+    {
+      "level": "university",
+      "institute": "Metropolitan University",
+      "passingYear": "2021"
+    }
+  ],
+
+  "occupations": [
+    {
+      "title": "Frontend Developer",
+      "organization": "Freelance",
+      "location": "Remote",
+      "startDate": "2021-01-01T00:00:00.000Z",
+      "endDate": null
+    }
+  ],
+
+  "rewards": [
+    {
+      "title": "Best Developer Award",
+      "year": "2023",
+      "description": "Awarded for outstanding MERN stack projects"
+    }
+  ],
+
+  "spouseIds": [],
+  "childrenIds": [],
+
+  "pictures": [
+    {
+      "url": "https://example.com/images/borhan.jpg",
+      "caption": "Profile picture"
+    }
+  ],
+
+  "contact": {
+    "mobileNo": "+8801XXXXXXXXX",
+    "whatsapp": "+8801XXXXXXXXX",
+    "email": "borhaninfos@gmail.com",
+    "facebook": "https://facebook.com/borhan",
+    "twitter": "",
+    "instagram": "",
+    "linkedin": "https://linkedin.com/in/borhanuddin",
+    "website": "https://borhan.dev"
+  },
+
+  "isClanRoot": true,
+  "isApproved": true
+}

@@ -10,5 +10,5 @@ export const dashboardNavItems = [
   { name: "নিরপাতা", path: "/" },
   { name: "ড্যাশবোর্ড", path: "/dashboard" },
   { name: "সদস্য যোগ করুন", path: "/dashboard/add-member" },
-  { name: "সদস্য তালিকা", path: "/dashboard/member-list" },
+  { name: "সদস্য তালিকা", path: "/dashboard/members" },
 ];

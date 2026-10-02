@@ -12,8 +12,13 @@ const Header = () => {
   const isAuthenticated = status === "authenticated";
 
   return (
-    <header className="rn-header haeder-default black-logo-version header--fixed header--sticky">
-      <div className="header-wrapper rn-popup-mobile-menu m--0 row align-items-center">
+    <header className="rn-header haeder-default black-logo-version header--sticky">
+      <div
+        className="header-wrapper text-white rn-popup-mobile-menu m--0 row align-items-center container glass-effect"
+        style={{
+          margin: "15px auto 0",
+        }}
+      >
         {/* Logo */}
         <div className="col-lg-2 col-md-6 col-6">
           <div className="header-left">

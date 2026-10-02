@@ -6906,18 +6906,30 @@ input[type="radio"]~label::after {
   font-weight: 500;
 }
 
+.form-group .select-input__input {
+  padding: 20px !important;
+}
+
+.form-group .date-pad {
+  padding: 0 10px !important;
+  background: #216ba5;
+  color: #fff;
+}
+
 .form-group input,
 .form-group select {
   border: 1px solid #b2b2b2;
   border-radius: 4px;
-  height: 50px;
+  padding: 25px 20px !important;
+  height: 38px !important;
   font-size: var(--font-size-b2);
   -webkit-transition: var(--transition);
   transition: var(--transition);
-  padding: 0 20px;
   /* background-color: var(--color-lightest); */
   transition: var(--transition);
 }
+
+
 
 .form-group input:focus {
   border-color: var(--color-primary);
@@ -16364,6 +16376,12 @@ div#featured-project-carousel {
   }
 }
 
+
+body.white-version .rn-resume-area .personal-experience-inner .experience-list .resume-single-list {
+  background: var(--gradient-box-w);
+  box-shadow: var(--shadow-white-3);
+}
+
 .personal-experience-inner .experience-list .resume-single-list {
   position: relative;
   z-index: 2;
@@ -16428,7 +16446,7 @@ div#featured-project-carousel {
   height: 20px;
   border: 5px solid #17191c;
   border-radius: 100%;
-  right: 104%;
+  right: 101.8%;
   top: 55px;
   -webkit-transform: translateY(-7px);
   transform: translateY(-7px);
@@ -16452,7 +16470,7 @@ div#featured-project-carousel {
 .personal-experience-inner .experience-list .resume-single-list .inner::before {
   position: absolute;
   content: "";
-  width: 28px;
+  width: 35px;
   height: 5px;
   right: 100%;
   top: 63px;
@@ -17423,6 +17441,27 @@ div#featured-project-carousel {
   height: auto;
   -ms-flex-wrap: nowrap;
   flex-wrap: nowrap;
+}
+
+.tab-navigation-button.shad {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+
+
+}
+
+.tab-navigation-button .nav-item .nav-link.shad {
+  color: var(--color-body-white);
+  justify-content: left;
+  padding: 5px 20px;
+  height: 60px
+}
+
+.tab-navigation-button .nav-item .nav-link.shad:hover,
+.tab-navigation-button .nav-item .nav-link.shad.active {
+  background-color: var(--color-white);
+  box-shadow: var(--shadow-white-3);
+  color: var(--color-danger)
 }
 
 @media only screen and (min-width: 992px) and (max-width: 1199px) {

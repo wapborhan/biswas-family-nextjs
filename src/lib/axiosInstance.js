@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // Axios Interceptor Instance
-const AxiosInstance = axios.create({
+const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
   headers: { "Content-Type": "application/json" },
 });
@@ -34,4 +34,4 @@ const AxiosInstance = axios.create({
 //   }
 // );
 
-export default AxiosInstance;
+export default api;
