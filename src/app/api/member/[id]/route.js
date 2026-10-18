@@ -15,10 +15,10 @@ export async function GET(req, { params }) {
     await dbConnect();
 
     const member = await Member.findById(id)
-      .populate("fatherId", "name")
-      .populate("motherId", "name")
-      .populate("spouseIds", "name")
-      .populate("childrenIds", "name");
+      .populate("fatherId", "fullName")
+      .populate("motherId", "fullName")
+      .populate("spousesIds", "fullName ")
+      .populate("childrensIds", "fullName");
 
     if (!member) {
       return NextResponse.json(

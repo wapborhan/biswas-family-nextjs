@@ -7,10 +7,31 @@ export const GET = async () => {
     await dbConnect();
 
     const members = await Member.find({})
-      .populate("fatherId", "name")
-      .populate("motherId", "name")
-      .populate("spouseIds", "name")
-      .populate("childrenIds", "name");
+      .populate("fatherId", "fullName")
+      .populate("motherId", "fullName")
+      .populate({
+        path: "spousesIds",
+        select:
+          "fullName gender profilePic childrensIds address fatherId motherId",
+        populate: [
+          {
+            path: "fatherId",
+            select: "fullName _id",
+          },
+          {
+            path: "motherId",
+            select: "fullName _id",
+          },
+          {
+            path: "childrensIds",
+            select: "fullName _id profilePic gender",
+          },
+        ],
+      })
+      .populate({
+        path: "childrensIds",
+        select: "fullName",
+      });
 
     if (!members.length) {
       return NextResponse.json(
