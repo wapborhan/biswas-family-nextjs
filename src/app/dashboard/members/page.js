@@ -2,6 +2,8 @@ import React from "react";
 import MembersTable from "./MembersTable";
 import { fetchMembers } from "@/lib/fetchMembers";
 
+export const dynamic = "force-dynamic";
+
 const page = async () => {
   // example: fetch only clan root or all members
   const members = await fetchMembers();

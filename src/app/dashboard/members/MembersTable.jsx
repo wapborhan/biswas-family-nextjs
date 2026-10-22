@@ -1,8 +1,8 @@
-"use client";
 import Link from "next/link";
 import React from "react";
+import ApproveButton from "./ApproveButton";
 
-const MembersTable = ({ members }) => {
+const MembersTable = ({ members = [] }) => {
   return (
     <div className="overflow-x-auto">
       <table className="table w-full border">
@@ -27,7 +27,13 @@ const MembersTable = ({ members }) => {
                   </Link>
                 </td>
                 <td>{member.fullName}</td>
-                <td>{member.fatherId ? member.fatherId : "অজানা"}</td>
+                <td>
+                  {member.fatherId
+                    ? typeof member.fatherId === "object"
+                      ? member.fatherId.fullName
+                      : member.fatherId
+                    : "অজানা"}
+                </td>
                 <td>
                   {member.gender
                     ? member.gender === "male"
@@ -55,14 +61,9 @@ const MembersTable = ({ members }) => {
                     </Link>
                   </div>
 
-                  {/* Approve */}
+                  {/* Separate Client Approve Button */}
                   {!member.isApproved && (
-                    <button
-                      onClick={() => handleApprove(member._id)}
-                      className="btn btn-xs btn-success"
-                    >
-                      Approve
-                    </button>
+                    <ApproveButton memberId={member._id.toString()} />
                   )}
                 </td>
               </tr>

@@ -37,14 +37,28 @@ const SpousesWiseChildrens = ({ spouses }) => {
               <h2 className="title small-h2">{fullName}</h2>
             </div>
             <p></p>
-            <ul class="about-skill-style mb--40">
+            <ul className="about-skill-style mb--40">
               <li>
                 <SVGTik />
-                <span>পিতাঃ {fatherId ? fatherId.fullName : "অজানা"}</span>
+                <span>
+                  পিতাঃ{" "}
+                  {fatherId
+                    ? typeof fatherId === "object"
+                      ? fatherId.fullName
+                      : fatherId
+                    : "অজানা"}
+                </span>
               </li>{" "}
               <li>
                 <SVGTik />
-                <span>মাতাঃ {motherId ? motherId.fullName : "অজানা"}</span>
+                <span>
+                  মাতাঃ{" "}
+                  {motherId
+                    ? typeof motherId === "object"
+                      ? motherId.fullName
+                      : motherId
+                    : "অজানা"}
+                </span>
               </li>
               <li>
                 <SVGTik />

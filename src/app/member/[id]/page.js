@@ -72,23 +72,45 @@ const Page = async ({ params }) => {
                     {isMainRoot ? (
                       <>
                         <div className="status-info mb-3">
-                          পিতাঃ {fatherId ? fatherId.fullName : "অজানা"}
+                          পিতাঃ{" "}
+                          {fatherId
+                            ? typeof fatherId === "object"
+                              ? fatherId.fullName
+                              : fatherId
+                            : "অজানা"}
                         </div>
                         <div className="status-info mb-3">
-                          মাতাঃ {motherId ? motherId.fullName : "অজানা"}
+                          মাতাঃ{" "}
+                          {motherId
+                            ? typeof motherId === "object"
+                              ? motherId.fullName
+                              : motherId
+                            : "অজানা"}
                         </div>
                       </>
                     ) : (
                       <>
                         <div className="status-info mb-3">
                           {gender === "male" ? (
-                            <>পিতাঃ {fatherId ? fatherId.fullName : "অজানা"} </>
+                            <>
+                              পিতাঃ{" "}
+                              {fatherId
+                                ? typeof fatherId === "object"
+                                  ? fatherId.fullName
+                                  : fatherId
+                                : "অজানা"}{" "}
+                            </>
                           ) : (
                             <>স্বামীঃ</>
                           )}
                         </div>
                         <div className="status-info mb-3">
-                          মাতাঃ {motherId ? motherId.fullName : "অজানা"}
+                          মাতাঃ{" "}
+                          {motherId
+                            ? typeof motherId === "object"
+                              ? motherId.fullName
+                              : motherId
+                            : "অজানা"}
                         </div>
                       </>
                     )}

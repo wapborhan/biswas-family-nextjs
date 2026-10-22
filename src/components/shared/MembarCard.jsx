@@ -16,8 +16,18 @@ const MembarCard = async ({ member }) => {
 
   const familyMember = await fetchMembers();
 
-  const fatherData = familyMember.find((m) => m.id === fatherId);
-  const motherData = familyMember.find((m) => m.id === motherId);
+  const fatherData = familyMember.find((m) => m.id === fatherId || m._id === fatherId);
+  const motherData = familyMember.find((m) => m.id === motherId || m._id === motherId);
+
+  const fatherDisplayName =
+    typeof fatherId === "object"
+      ? fatherId?.fullName
+      : fatherData?.fullName || (fatherId ? String(fatherId) : "অজানা");
+
+  const motherDisplayName =
+    typeof motherId === "object"
+      ? motherId?.fullName
+      : motherData?.fullName || (motherId ? String(motherId) : "অজানা");
 
   return (
     <div className="col-lg-6 col-xl-4 col-md-6 col-12 mt--50 mt_md--30 mt_sm--30">
@@ -40,23 +50,23 @@ const MembarCard = async ({ member }) => {
               {isMainRoot ? (
                 <>
                   <h4 className="title text-uppercase">
-                    পিতাঃ {fatherData ? fatherData.fullName : "অজানা"}
+                    পিতাঃ {fatherDisplayName}
                   </h4>
                   <h4 className="title text-uppercase  mb-3">
-                    মাতাঃ {motherData ? motherData.fullName : "অজানা"}
+                    মাতাঃ {motherDisplayName}
                   </h4>
                 </>
               ) : (
                 <>
                   <h4 className="title text-uppercase">
                     {gender === "male" ? (
-                      <>পিতাঃ {fatherData ? fatherData.fullName : "অজানা"} </>
+                      <>পিতাঃ {fatherDisplayName} </>
                     ) : (
                       <>স্বামীঃ</>
                     )}
                   </h4>
                   <h4 className="title text-uppercase mb-3">
-                    মাতাঃ {motherData ? motherData.fullName : "অজানা"}
+                    মাতাঃ {motherDisplayName}
                   </h4>
                 </>
               )}

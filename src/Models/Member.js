@@ -43,13 +43,13 @@ const MemberSchema = new Schema(
     fullName: { type: String, required: true, trim: true },
 
     fatherId: {
-      type: Schema.Types.ObjectId,
+      type: Schema.Types.Mixed,
       ref: "Member",
       default: null,
     },
 
     motherId: {
-      type: Schema.Types.ObjectId,
+      type: Schema.Types.Mixed,
       ref: "Member",
       default: null,
     },
@@ -157,5 +157,11 @@ const MemberSchema = new Schema(
   },
 );
 
-/* Prevent model overwrite in Next.js */
-export default mongoose.models.Member || mongoose.model("Member", MemberSchema);
+// ✅ Clear stale model cache on reload so schema updates take effect immediately
+if (mongoose.models.Member) {
+  delete mongoose.models.Member;
+}
+
+const Member = mongoose.model("Member", MemberSchema);
+
+export default Member;
