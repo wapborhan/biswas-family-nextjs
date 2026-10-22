@@ -29,7 +29,7 @@ const ApproveButton = ({ memberId }) => {
       router.refresh();
     } catch (error) {
       console.error("Error approving member:", error);
-      alert("আপ্রুভ করতে ব্যর্থ হয়েছে: " + error.message);
+      alert("অপ্প্রভ করতে ব্যর্থ হয়েছে: " + error.message);
     } finally {
       setLoading(false);
     }
@@ -45,7 +45,7 @@ const ApproveButton = ({ memberId }) => {
         cursor: loading ? "not-allowed" : "pointer",
       }}
     >
-      {loading ? "আপ্রুভ হচ্ছে..." : "আপ্রুভ"}
+      {loading ? "আপ্রুভ হচ্ছে..." : "অপ্প্রভ"}
     </button>
   );
 };

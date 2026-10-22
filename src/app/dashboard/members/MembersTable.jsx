@@ -1,6 +1,7 @@
 import Link from "next/link";
 import React from "react";
 import ApproveButton from "./ApproveButton";
+import DeleteButton from "./DeleteButton";
 
 const MembersTable = ({ members = [] }) => {
   return (
@@ -50,21 +51,29 @@ const MembersTable = ({ members = [] }) => {
                   )}
                 </td>
 
-                <td className="flex gap-2">
-                  {/* Edit */}
-                  <div className="d-flex gap-2">
+                <td>
+                  <div className="d-flex gap-2 align-items-center">
+                    {/* Edit */}
                     <Link
                       href={`/dashboard/member/${member._id}/editInfo`}
                       className="btn btn-md btn-primary text-white"
                     >
                       আপডেট
                     </Link>
-                  </div>
 
-                  {/* Separate Client Approve Button */}
-                  {!member.isApproved && (
-                    <ApproveButton memberId={member._id.toString()} />
-                  )}
+                    {/* Separate Client Approve Button */}
+                    {!member.isApproved && (
+                      <ApproveButton memberId={member._id.toString()} />
+                    )}
+
+                    {/* Delete Member Button */}
+                    {!member.isApproved && (
+                      <DeleteButton
+                        memberId={member._id.toString()}
+                        memberName={member.fullName}
+                      />
+                    )}
+                  </div>
                 </td>
               </tr>
             ))

@@ -86,3 +86,46 @@ export async function PATCH(req, { params }) {
     );
   }
 }
+
+export async function DELETE(req, { params }) {
+  const { id } = await params;
+
+  // Validate ObjectId
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return NextResponse.json({ message: "Invalid member id" }, { status: 400 });
+  }
+
+  try {
+    await dbConnect();
+
+    const member = await Member.findByIdAndDelete(id);
+
+    if (!member) {
+      return NextResponse.json(
+        { message: "Member not found" },
+        { status: 404 },
+      );
+    }
+
+    // Clean up references in other members (childrensIds, spousesIds)
+    await Member.updateMany(
+      { childrensIds: id },
+      { $pull: { childrensIds: id } },
+    );
+    await Member.updateMany(
+      { spousesIds: id },
+      { $pull: { spousesIds: id } },
+    );
+
+    return NextResponse.json({
+      message: "Member deleted successfully",
+      status: 200,
+    });
+  } catch (error) {
+    console.error("Database error:", error);
+    return NextResponse.json(
+      { error: error.message || "Internal Server Error" },
+      { status: 500 },
+    );
+  }
+}
