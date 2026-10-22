@@ -1,18 +1,13 @@
 "use client";
 
-import { useForm, Controller } from "react-hook-form";
-import Select from "react-select";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import { useMemo, useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
+import InfoFields from "./InfoFields";
+import BirthInfoFields from "./BirthInfoFields";
+import AddressFields from "./AddressFields";
 
-const genderOptions = [
-  { value: "male", label: "পুরুষ" },
-  { value: "female", label: "মহিলা" },
-];
-
-const Form = ({ malemembers }) => {
+const Form = ({ malemembers = [] }) => {
   const router = useRouter();
   const [submitting, setSubmitting] = useState(false);
   const [feedback, setFeedback] = useState(null);
@@ -25,48 +20,18 @@ const Form = ({ malemembers }) => {
     setValue,
     reset,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      isClanRoot: false,
+      sameAsPresent: false,
+      address: {
+        present: { country: "বাংলাদেশ" },
+        permanent: { country: "বাংলাদেশ" },
+      },
+    },
+  });
 
-  /* ---------------- WATCH CLAN ROOT ---------------- */
-  const isClanRoot = watch("isClanRoot");
-
-  /* ---------------- RESET FIELDS ON CLAN ROOT CHANGE ---------------- */
-  useEffect(() => {
-    if (isClanRoot) {
-      setValue("father", null);
-      setValue("mother", null);
-    } else {
-      setValue("fatherName", "");
-      setValue("motherName", "");
-    }
-  }, [isClanRoot, setValue]);
-
-  /* ---------------- FATHER OPTIONS ---------------- */
-  const fatherOptions = useMemo(
-    () =>
-      malemembers.map((member) => ({
-        value: member._id,
-        label: member.fullName,
-      })),
-    [malemembers],
-  );
-
-  /* ---------------- WATCH FATHER ---------------- */
-  const selectedFather = watch("father");
-
-  /* ---------------- MOTHER OPTIONS (DEPENDENT) ---------------- */
-  const motherOptions = useMemo(() => {
-    if (!selectedFather) return [];
-
-    const father = malemembers.find((m) => m._id === selectedFather.value);
-
-    if (!father?.spousesIds) return [];
-
-    return father.spousesIds.map((wife) => ({
-      value: wife._id,
-      label: wife.fullName,
-    }));
-  }, [selectedFather, malemembers]);
+  const sameAsPresent = watch("sameAsPresent");
 
   const onSubmit = async (data) => {
     setSubmitting(true);
@@ -100,10 +65,50 @@ const Form = ({ malemembers }) => {
       },
       address: {
         present: {
-          village: data.presentAddress?.trim() || "",
+          village: data.address?.present?.village?.trim() || "",
+          postOffice: data.address?.present?.postOffice?.trim() || "",
+          policeStation: data.address?.present?.policeStation?.trim() || "",
+          district: data.address?.present?.district?.trim() || "",
+          division: data.address?.present?.division?.trim() || "",
+          postalCode: data.address?.present?.postalCode?.trim() || "",
+          country: data.address?.present?.country?.trim() || "Bangladesh",
         },
         permanent: {
-          village: data.permanentAddress?.trim() || "",
+          village:
+            (data.sameAsPresent
+              ? data.address?.present?.village
+              : data.address?.permanent?.village
+            )?.trim() || "",
+          postOffice:
+            (data.sameAsPresent
+              ? data.address?.present?.postOffice
+              : data.address?.permanent?.postOffice
+            )?.trim() || "",
+          policeStation:
+            (data.sameAsPresent
+              ? data.address?.present?.policeStation
+              : data.address?.permanent?.policeStation
+            )?.trim() || "",
+          district:
+            (data.sameAsPresent
+              ? data.address?.present?.district
+              : data.address?.permanent?.district
+            )?.trim() || "",
+          division:
+            (data.sameAsPresent
+              ? data.address?.present?.division
+              : data.address?.permanent?.division
+            )?.trim() || "",
+          postalCode:
+            (data.sameAsPresent
+              ? data.address?.present?.postalCode
+              : data.address?.permanent?.postalCode
+            )?.trim() || "",
+          country:
+            (data.sameAsPresent
+              ? data.address?.present?.country
+              : data.address?.permanent?.country
+            )?.trim() || "Bangladesh",
         },
       },
     };
@@ -131,7 +136,34 @@ const Form = ({ malemembers }) => {
       });
 
       // Reset form
-      reset();
+      reset({
+        name: "",
+        birthPlace: "",
+        fatherName: "",
+        motherName: "",
+        sameAsPresent: false,
+        isClanRoot: false,
+        address: {
+          present: {
+            division: "",
+            district: "",
+            policeStation: "",
+            postOffice: "",
+            village: "",
+            postalCode: "",
+            country: "Bangladesh",
+          },
+          permanent: {
+            division: "",
+            district: "",
+            policeStation: "",
+            postOffice: "",
+            village: "",
+            postalCode: "",
+            country: "Bangladesh",
+          },
+        },
+      });
       router.refresh();
     } catch (err) {
       console.error("Submit error:", err);
@@ -143,205 +175,73 @@ const Form = ({ malemembers }) => {
       setSubmitting(false);
     }
   };
+
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
       className="row rwt-dynamic-form mt-5 form-wrap p-5"
     >
-      {/* NAME */}
-      <div className="col-lg-12">
-        <div className="form-group">
-          <label>নাম</label>
-          <input
-            {...register("name", { required: "নাম আবশ্যক" })}
-            className="form-control"
-          />
-          {errors.name && (
-            <small className="text-danger">{errors.name.message}</small>
-          )}
-        </div>
-      </div>
-      <div className="col-lg-12">
-        <div className="form-group d-flex align-items-center mb-3">
+      {/* CLAN ROOT, FATHER, MOTHER */}
+      <InfoFields
+        control={control}
+        register={register}
+        watch={watch}
+        setValue={setValue}
+        malemembers={malemembers}
+        errors={errors}
+      />
+
+      {/* GENDER, BIRTH DATE, BIRTH TIME, BIRTH PLACE */}
+      <BirthInfoFields control={control} register={register} errors={errors} />
+
+      {/* PRESENT ADDRESS */}
+      <AddressFields
+        prefix="address.present"
+        title="বর্তমান ঠিকানা (Present Address)"
+        control={control}
+        register={register}
+        watch={watch}
+        setValue={setValue}
+      />
+
+      {/* SAME AS PRESENT CHECKBOX */}
+      <div className="col-12 my-3">
+        <div className="form-group d-flex align-items-center">
           <input
             type="checkbox"
-            id="isClanRoot"
-            {...register("isClanRoot")}
+            id="sameAsPresent"
+            {...register("sameAsPresent")}
             style={{
-              width: "18px !important",
-              height: "18px !important",
+              width: "18px",
+              height: "18px",
               cursor: "pointer",
               marginRight: "10px",
-              border: "1px solid #b2b2b2 !important",
-              outline: "1px solid #b2b2b2 !important",
-              opacity: "1 !important",
             }}
           />
           <label
-            htmlFor="isClanRoot"
+            htmlFor="sameAsPresent"
             style={{
               cursor: "pointer",
               marginBottom: 0,
               color: "#878e99",
             }}
           >
-            বংশের আদি পুরুষ অথবা বংশের বাইরের সদস্য (Clan Root)
+            বর্তমান ও স্থায়ী ঠিকানা একই (Same as Present Address)
           </label>
         </div>
       </div>
-      {/* FATHER */}
-      <div className="col-lg-4">
-        <div className="form-group">
-          <label>পিতা</label>
-          {isClanRoot ? (
-            <input
-              type="text"
-              {...register("fatherName")}
-              className="form-control"
-              placeholder="পিতার নাম লিখুন"
-            />
-          ) : (
-            <Controller
-              name="father"
-              control={control}
-              render={({ field }) => (
-                <Select
-                  {...field}
-                  options={fatherOptions}
-                  placeholder="পিতা নির্বাচন করুন"
-                  isClearable
-                  onChange={(val) => {
-                    field.onChange(val);
-                    setValue("mother", null); // 🔥 reset mother
-                  }}
-                />
-              )}
-            />
-          )}
-        </div>
-      </div>
 
-      {/* MOTHER (FILTERED BY FATHER OR TEXT INPUT) */}
-      <div className="col-lg-4">
-        <div className="form-group">
-          <label>মাতা</label>
-          {isClanRoot ? (
-            <input
-              type="text"
-              {...register("motherName")}
-              className="form-control"
-              placeholder="মাতার নাম লিখুন"
-            />
-          ) : (
-            <Controller
-              name="mother"
-              control={control}
-              render={({ field }) => (
-                <Select
-                  {...field}
-                  options={motherOptions}
-                  placeholder={
-                    selectedFather
-                      ? "মাতা নির্বাচন করুন"
-                      : "আগে পিতা নির্বাচন করুন"
-                  }
-                  isDisabled={!selectedFather}
-                  isClearable
-                />
-              )}
-            />
-          )}
-        </div>
-      </div>
-
-      {/* GENDER */}
-      <div className="col-lg-4">
-        <div className="form-group">
-          <label>লিঙ্গ</label>
-          <Controller
-            name="gender"
-            control={control}
-            rules={{ required: "লিঙ্গ নির্বাচন করুন" }}
-            render={({ field }) => (
-              <Select
-                {...field}
-                options={genderOptions}
-                placeholder="লিঙ্গ নির্বাচন করুন"
-              />
-            )}
-          />
-          {errors.gender && (
-            <small className="text-danger">{errors.gender.message}</small>
-          )}
-        </div>
-      </div>
-
-      {/* BIRTH DATE */}
-      <div className="col-lg-4">
-        <div className="form-group">
-          <label>জন্ম তারিখ</label>
-          <Controller
-            name="birthDate"
-            control={control}
-            render={({ field }) => (
-              <DatePicker
-                className="form-control"
-                selected={field.value}
-                onChange={field.onChange}
-                dateFormat="dd/MM/yyyy"
-                placeholderText="তারিখ নির্বাচন করুন"
-              />
-            )}
-          />
-        </div>
-      </div>
-
-      {/* BIRTH TIME */}
-      <div className="col-lg-4">
-        <div className="form-group">
-          <label>জন্ম সময়</label>
-          <Controller
-            name="birthTime"
-            control={control}
-            render={({ field }) => (
-              <DatePicker
-                className="form-control"
-                selected={field.value}
-                onChange={field.onChange}
-                showTimeSelect
-                showTimeSelectOnly
-                timeIntervals={5}
-                timeCaption="সময়"
-                dateFormat="hh:mm aa"
-                placeholderText="সময় নির্বাচন করুন"
-              />
-            )}
-          />
-        </div>
-      </div>
-
-      {/* BIRTH PLACE */}
-      <div className="col-lg-4">
-        <div className="form-group">
-          <label>জন্মস্থান</label>
-          <input {...register("birthPlace")} className="form-control" />
-        </div>
-      </div>
-
-      {/* ADDRESS */}
-      <div className="col-lg-6">
-        <div className="form-group">
-          <label>বর্তমান ঠিকানা</label>
-          <input {...register("presentAddress")} className="form-control" />
-        </div>
-      </div>
-
-      <div className="col-lg-6">
-        <div className="form-group">
-          <label>স্থায়ী ঠিকানা</label>
-          <input {...register("permanentAddress")} className="form-control" />
-        </div>
-      </div>
+      {/* PERMANENT ADDRESS */}
+      {!sameAsPresent && (
+        <AddressFields
+          prefix="address.permanent"
+          title="স্থায়ী ঠিকানা (Permanent Address)"
+          control={control}
+          register={register}
+          watch={watch}
+          setValue={setValue}
+        />
+      )}
 
       {/* FEEDBACK BANNER */}
       {feedback && (
@@ -369,7 +269,7 @@ const Form = ({ malemembers }) => {
         </div>
       )}
 
-      {/* BUTTON */}
+      {/* SUBMIT BUTTON */}
       <div className="col-12 mt-4">
         <button
           type="submit"
@@ -378,6 +278,7 @@ const Form = ({ malemembers }) => {
           style={{
             opacity: submitting ? 0.7 : 1,
             cursor: submitting ? "not-allowed" : "pointer",
+            zIndex: "0 !important",
           }}
         >
           <span>

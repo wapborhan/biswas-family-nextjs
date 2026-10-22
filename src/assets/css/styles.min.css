@@ -6297,8 +6297,7 @@ input[disabled] {
   cursor: default;
 }
 
-input[type="checkbox"],
-input[type="radio"] {
+input[type="checkbox"] input[type="radio"] {
   padding: 0;
 }
 
@@ -6823,7 +6822,7 @@ textarea:focus {
 
 input[type="checkbox"],
 input[type="radio"] {
-  opacity: 0;
+  opacity: 1;
   position: absolute;
 }
 
@@ -6842,8 +6841,8 @@ input[type="checkbox"]~label::before,
 input[type="radio"]~label::before {
   content: " ";
   position: absolute;
-  top: 2px;
-  left: 2px;
+  top: 1px;
+  left: 1px;
   width: 14px;
   height: 14px;
   background-color: #fff;
@@ -6853,7 +6852,7 @@ input[type="radio"]~label::before {
   transition: all 0.3s;
 }
 
-input[type="checkbox"]~label::after,
+/* input[type="checkbox"]~label::after,
 input[type="radio"]~label::after {
   content: " ";
   position: absolute;
@@ -6870,7 +6869,7 @@ input[type="radio"]~label::after {
   opacity: 0;
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
-}
+} */
 
 input[type="checkbox"]:checked~label::before,
 input[type="radio"]:checked~label::before {
