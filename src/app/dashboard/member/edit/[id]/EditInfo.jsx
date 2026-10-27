@@ -1,7 +1,7 @@
 "use client";
 
 import { useForm, Controller, useFieldArray } from "react-hook-form";
-import Select from "react-select";
+import GlobalSelect from "@/components/shared/GlobalSelect";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useMemo } from "react";
@@ -82,7 +82,9 @@ const EditInfo = ({ members = [], onSubmit }) => {
           name="gender"
           control={control}
           rules={{ required: true }}
-          render={({ field }) => <Select {...field} options={genderOptions} />}
+          render={({ field }) => (
+            <GlobalSelect {...field} options={genderOptions} />
+          )}
         />
       </div>
 
@@ -95,7 +97,7 @@ const EditInfo = ({ members = [], onSubmit }) => {
           name="fatherId"
           control={control}
           render={({ field }) => (
-            <Select
+            <GlobalSelect
               {...field}
               options={memberOptions}
               isClearable
@@ -114,7 +116,7 @@ const EditInfo = ({ members = [], onSubmit }) => {
           name="motherId"
           control={control}
           render={({ field }) => (
-            <Select
+            <GlobalSelect
               {...field}
               options={motherOptions}
               isDisabled={!father}
@@ -130,7 +132,7 @@ const EditInfo = ({ members = [], onSubmit }) => {
           name="spousesIds"
           control={control}
           render={({ field }) => (
-            <Select {...field} options={memberOptions} isMulti />
+            <GlobalSelect {...field} options={memberOptions} isMulti />
           )}
         />
       </div>
@@ -141,7 +143,7 @@ const EditInfo = ({ members = [], onSubmit }) => {
           name="childrensId"
           control={control}
           render={({ field }) => (
-            <Select {...field} options={memberOptions} isMulti />
+            <GlobalSelect {...field} options={memberOptions} isMulti />
           )}
         />
       </div>

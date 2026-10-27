@@ -23,6 +23,7 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "baseline-browser-mapping": "^2.11.30",
     "eslint": "^9",
     "eslint-config-next": "^16.0.7"
   }

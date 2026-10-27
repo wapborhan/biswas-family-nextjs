@@ -2,29 +2,15 @@
 
 import { useMemo } from "react";
 import { Controller } from "react-hook-form";
-import Select from "react-select";
-import CreatableSelect from "react-select/creatable";
+import GlobalSelect, {
+  GlobalCreatableSelect,
+} from "@/components/shared/GlobalSelect";
 import {
   getDivisionOptions,
   getDistrictOptions,
   getUpazilaOptions,
   getPostOfficeOptions,
 } from "@/lib/bangladeshGeoData";
-
-const customStyles = {
-  option: (provided) => ({
-    ...provided,
-    color: "black",
-  }),
-  control: (provided) => ({
-    ...provided,
-    color: "black",
-  }),
-  singleValue: (provided) => ({
-    ...provided,
-    color: "black",
-  }),
-};
 
 const AddressFields = ({
   prefix,
@@ -80,7 +66,7 @@ const AddressFields = ({
             name={`${prefix}.division`}
             control={control}
             render={({ field }) => (
-              <Select
+              <GlobalSelect
                 {...field}
                 value={
                   divisionOptions.find((opt) => opt.value === field.value) ||
@@ -90,7 +76,6 @@ const AddressFields = ({
                 }
                 options={divisionOptions}
                 placeholder="বিভাগ নির্বাচন করুন"
-                styles={customStyles}
                 isClearable
                 onChange={(val) => {
                   field.onChange(val ? val.value : "");
@@ -113,7 +98,7 @@ const AddressFields = ({
             name={`${prefix}.district`}
             control={control}
             render={({ field }) => (
-              <Select
+              <GlobalSelect
                 {...field}
                 value={
                   districtOptions.find((opt) => opt.value === field.value) ||
@@ -128,7 +113,6 @@ const AddressFields = ({
                     : "আগে বিভাগ নির্বাচন করুন"
                 }
                 isDisabled={!selectedDivision}
-                styles={customStyles}
                 isClearable
                 onChange={(val) => {
                   field.onChange(val ? val.value : "");
@@ -150,7 +134,7 @@ const AddressFields = ({
             name={`${prefix}.policeStation`}
             control={control}
             render={({ field }) => (
-              <Select
+              <GlobalSelect
                 {...field}
                 value={
                   upazilaOptions.find((opt) => opt.value === field.value) ||
@@ -159,7 +143,6 @@ const AddressFields = ({
                     : null)
                 }
                 options={upazilaOptions}
-                styles={customStyles}
                 placeholder={
                   selectedDistrict
                     ? "থানা / উপজেলা নির্বাচন করুন"
@@ -186,7 +169,7 @@ const AddressFields = ({
             name={`${prefix}.postOffice`}
             control={control}
             render={({ field }) => (
-              <CreatableSelect
+              <GlobalCreatableSelect
                 {...field}
                 value={
                   field.value
@@ -199,7 +182,6 @@ const AddressFields = ({
                     : null
                 }
                 options={postOfficeOptions}
-                styles={customStyles}
                 placeholder={
                   selectedUpazila
                     ? "ডাকঘর নির্বাচন করুন বা লিখুন"

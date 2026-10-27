@@ -1,16 +1,7 @@
-import { familyMember } from "@/assets/data/nodes";
-import Members from "@/components/Members";
-import React from "react";
+import { redirect } from "next/navigation";
 
-const page = () => {
-  const biswasFamilyMember = familyMember.filter(
-    (member) => member.isClanRoot === true
-  );
-  return (
-    <>
-      <Members members={biswasFamilyMember} />
-    </>
-  );
+const Page = () => {
+  redirect("/members");
 };
 
-export default page;
+export default Page;

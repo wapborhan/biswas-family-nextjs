@@ -2,7 +2,7 @@
 
 import { useMemo, useEffect } from "react";
 import { Controller } from "react-hook-form";
-import Select from "react-select";
+import GlobalSelect, { GlobelSelect } from "@/components/shared/GlobalSelect";
 
 const InfoFields = ({
   control,
@@ -51,7 +51,8 @@ const InfoFields = ({
 
   return (
     <>
-      <div className="col-lg-12">
+      {/* Name */}
+      <div className="col-lg-6 col-md-6 col-12">
         <div className="form-group">
           <label htmlFor="name">নাম</label>
           <input
@@ -64,6 +65,32 @@ const InfoFields = ({
           />
           {errors.name && (
             <small className="text-danger">{errors.name.message}</small>
+          )}
+        </div>
+      </div>
+
+      {/* Gender */}
+      <div className="col-lg-6 col-md-6 col-12">
+        <div className="form-group">
+          <label>লিঙ্গ</label>
+          <Controller
+            name="gender"
+            control={control}
+            rules={{ required: "লিঙ্গ নির্বাচন করুন" }}
+            render={({ field }) => (
+              <GlobelSelect
+                {...field}
+                options={[
+                  { value: "male", label: "পুরুষ" },
+                  { value: "female", label: "মহিলা" },
+                  { value: "others", label: "অন্যান্য" },
+                ]}
+                placeholder="লিঙ্গ নির্বাচন করুন"
+              />
+            )}
+          />
+          {errors?.gender && (
+            <small className="text-danger">{errors.gender.message}</small>
           )}
         </div>
       </div>
@@ -97,7 +124,7 @@ const InfoFields = ({
       </div>
 
       {/* Father */}
-      <div className="col-lg-4">
+      <div className="col-lg-6 col-md-6 col-12">
         <div className="form-group">
           <label htmlFor="fathername">পিতা</label>
           {isClanRoot ? (
@@ -115,7 +142,7 @@ const InfoFields = ({
               name="father"
               control={control}
               render={({ field }) => (
-                <Select
+                <GlobalSelect
                   {...field}
                   options={fatherOptions}
                   placeholder="পিতা নির্বাচন করুন"
@@ -132,7 +159,7 @@ const InfoFields = ({
       </div>
 
       {/* Mother */}
-      <div className="col-lg-4">
+      <div className="col-lg-6 col-md-6 col-12">
         <div className="form-group">
           <label>মাতা</label>
           {isClanRoot ? (
@@ -147,7 +174,7 @@ const InfoFields = ({
               name="mother"
               control={control}
               render={({ field }) => (
-                <Select
+                <GlobalSelect
                   {...field}
                   options={motherOptions}
                   placeholder={

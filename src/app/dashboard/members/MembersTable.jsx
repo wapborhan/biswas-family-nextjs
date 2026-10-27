@@ -54,17 +54,16 @@ const MembersTable = ({ members = [] }) => {
                 <td>
                   <div className="d-flex gap-2 align-items-center">
                     {/* Edit */}
+                    {/* Separate Client Approve Button */}
+                    {!member.isApproved && (
+                      <ApproveButton memberId={member._id.toString()} />
+                    )}
                     <Link
                       href={`/dashboard/member/${member._id}/editInfo`}
                       className="btn btn-md btn-primary text-white"
                     >
                       আপডেট
                     </Link>
-
-                    {/* Separate Client Approve Button */}
-                    {!member.isApproved && (
-                      <ApproveButton memberId={member._id.toString()} />
-                    )}
 
                     {/* Delete Member Button */}
                     {!member.isApproved && (

@@ -191,8 +191,13 @@ const Form = ({ malemembers = [] }) => {
         errors={errors}
       />
 
-      {/* GENDER, BIRTH DATE, BIRTH TIME, BIRTH PLACE */}
-      <BirthInfoFields control={control} register={register} errors={errors} />
+      {/* GENDER, BIRTH DATE & TIME, BIRTH PLACE */}
+      <BirthInfoFields
+        control={control}
+        register={register}
+        errors={errors}
+        setValue={setValue}
+      />
 
       {/* PRESENT ADDRESS */}
       <AddressFields

@@ -6899,7 +6899,7 @@ input[type="radio"]~label::after {
 }
 
 .form-group label {
-  margin-bottom: 6px;
+  margin-bottom: 0px;
   font-size: 14px;
   line-height: 22px;
   font-weight: 500;
@@ -6917,21 +6917,28 @@ input[type="radio"]~label::after {
 
 .form-group input,
 .form-group select {
-  border: 1px solid #b2b2b2;
+  border: 1px solid #dce1e8 !important;
   border-radius: 4px;
-  padding: 25px 20px !important;
-  height: 38px !important;
-  font-size: var(--font-size-b2);
+  padding: 25px 20px;
+  height: 38px;
+  font-size: var(--font-size-b1);
   -webkit-transition: var(--transition);
   transition: var(--transition);
   /* background-color: var(--color-lightest); */
   transition: var(--transition);
 }
 
+.form-group select {
+  padding: 20px 20px !important;
+  height: 35px !important;
+  border: 1px solid #dce1e8;
+
+}
+
 
 
 .form-group input:focus {
-  border-color: var(--color-primary);
+  border-color: var(--color-primary) !important;
   -webkit-box-shadow: none;
   box-shadow: none;
 }

@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
-import Select from "react-select";
+import GlobalSelect from "@/components/shared/GlobalSelect";
 import { useMemo } from "react";
 import DatePicker from "react-datepicker";
 import { setHours, setMinutes } from "date-fns";
@@ -86,7 +86,7 @@ const EditInfo = ({ malemembers }) => {
             control={control}
             rules={{ required: "লিঙ্গ নির্বাচন করুন" }}
             render={({ field }) => (
-              <Select
+              <GlobalSelect
                 {...field}
                 options={genderOptions}
                 placeholder="লিঙ্গ নির্বাচন করুন"
@@ -107,7 +107,7 @@ const EditInfo = ({ malemembers }) => {
             name="father"
             control={control}
             render={({ field }) => (
-              <Select
+              <GlobalSelect
                 {...field}
                 options={fatherOptions}
                 placeholder="পিতা নির্বাচন করুন"
@@ -130,7 +130,7 @@ const EditInfo = ({ malemembers }) => {
             name="mother"
             control={control}
             render={({ field }) => (
-              <Select
+              <GlobalSelect
                 {...field}
                 options={motherOptions}
                 classNamePrefix="select-input"
@@ -155,7 +155,7 @@ const EditInfo = ({ malemembers }) => {
             control={control}
             rules={{ required: "রক্তের গ্রুপ নির্বাচন করুন" }}
             render={({ field }) => (
-              <Select
+              <GlobalSelect
                 options={bloodGroups.map((b) => ({
                   value: b,
                   label: b,
