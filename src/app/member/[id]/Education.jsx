@@ -1,128 +1,157 @@
 import React from "react";
 
-const Education = () => {
+const levelLabels = {
+  primary: "প্রাথমিক (Primary)",
+  secondary: "মাধ্যমিক (Secondary)",
+  "higher-secondary": "উচ্চ মাধ্যমিক (Higher Secondary)",
+  university: "বিশ্ববিদ্যালয় (University)",
+};
+
+const Education = ({ userData }) => {
+  const educationList = userData?.education || [];
+  const occupationsList = userData?.occupations || userData?.work || [];
+
   return (
-    <div
-      className="tab-pane show active mt--40"
-      id="v-pills-Design"
-      role="tabpanel"
-      aria-labelledby="v-pills-profile-tab"
-    >
-      <div className="container" id="resume">
-        {/* resume area start */}
-        <div className="personal-experience-inner">
-          <div className="row">
-            <div className="personal-experience-inner">
-              <div className="row m--0">
-                {/* Start Skill List Area  */}
-                <div className="col-lg-6 col-md-12 col-12">
-                  <div className="content">
-                    <span className="subtitle">2007 - 2010</span>
-                    <h4 className="maintitle">Education Quality</h4>
-                    <div className="experience-list padding-none border-none">
-                      {/* Start Single List  */}
-                      <div className="resume-single-list mt--30">
-                        <div className="inner psudo-after-none psudo-after-none">
-                          <div className="heading">
-                            <div className="title">
-                              <h4>Personal Portfolio April Fools</h4>
-                              <span>University of DVI (1997 - 2001)</span>
-                            </div>
-                            <div className="date-of-time">
-                              <span>4.30/5</span>
-                            </div>
-                          </div>
-                          <p className="description">
-                            The education should be very interactual. Ut
-                            tincidunt est ac dolor aliquam sodales. Phasellus
-                            sed mauris hendrerit, laoreet sem in, lobortis
-                            mauris hendrerit ante.
-                          </p>
-                        </div>
-                      </div>
-                      {/* End Single List  */}
-                      {/* Start Single List  */}
-                      <div className="resume-single-list mt--30">
-                        <div className="inner psudo-after-none">
-                          <div className="heading">
-                            <div className="title">
-                              <h4> Examples Of Personal Portfolio</h4>
-                              <span>College of Studies (2000 - 2002)</span>
-                            </div>
-                            <div className="date-of-time">
-                              <span>4.50/5</span>
-                            </div>
-                          </div>
-                          <p className="description">
-                            Maecenas finibus nec sem ut imperdiet. Ut tincidunt
-                            est ac dolor aliquam sodales. Phasellus sed mauris
-                            hendrerit, laoreet sem in, lobortis mauris hendrerit
-                            ante.
-                          </p>
-                        </div>
-                      </div>
-                      {/* End Single List  */}
-                    </div>
+    <div className="container" id="resume">
+      <div className="personal-experience-inner">
+        <div className="row">
+          {/* Education Quality */}
+          <div className="col-12 mb--50">
+            <div className="content">
+              <span className="subtitle">শিক্ষাগত বিবরণ</span>
+              <h4 className="maintitle">Education Quality</h4>
+              <div className="experience-list padding-none border-none">
+                {educationList.length === 0 ? (
+                  <div className="p-4 text-center text-muted bg-light rounded mt-3">
+                    কোনো শিক্ষাগত বিবরণ যোগ করা হয়নি।
                   </div>
-                </div>
-                {/* End Skill List Area  */}
-                {/* Start Skill List Area 2nd  */}
-                <div className="col-lg-6 col-md-12 col-12 mt_md--60 mt_sm--60">
-                  <div className="content">
-                    <span className="subtitle">2007 - 2010</span>
-                    <h4 className="maintitle">Job Experience</h4>
-                    <div className="experience-list padding-none border-none">
-                      {/* Start Single List  */}
-                      <div className="resume-single-list mt--30">
+                ) : (
+                  educationList.map((edu, idx) => {
+                    const levelName =
+                      levelLabels[edu.level] ||
+                      edu.level ||
+                      edu.degree ||
+                      "শিক্ষাস্তর";
+                    const instituteName =
+                      edu.institute || edu.institution || "শিক্ষা প্রতিষ্ঠান";
+
+                    return (
+                      <div
+                        className="resume-single-list mt--30"
+                        key={edu._id || idx}
+                      >
                         <div className="inner psudo-after-none">
                           <div className="heading">
                             <div className="title">
-                              <h4>Diploma in Web Development</h4>
-                              <span>BSE In CSE (2004 - 2008)</span>
+                              <h4>{levelName}</h4>
+                              <span>
+                                {instituteName}
+                                {edu.passingYear ? ` (${edu.passingYear})` : ""}
+                              </span>
                             </div>
-                            <div className="date-of-time">
-                              <span>4.70/5</span>
-                            </div>
+                            {edu.passingYear && (
+                              <div className="date-of-time">
+                                <span>পাসঃ {edu.passingYear}</span>
+                              </div>
+                            )}
                           </div>
-                          <p className="description">
-                            Contrary to popular belief. Ut tincidunt est ac
-                            dolor aliquam sodales. Phasellus sed mauris
-                            hendrerit, laoreet sem in, lobortis mauris hendrerit
-                            ante.
-                          </p>
+                          {(edu.fieldOfStudy || edu.grade) && (
+                            <p className="description">
+                              {edu.fieldOfStudy && (
+                                <>
+                                  <strong>বিভাগঃ</strong>{" "}
+                                  {edu.fieldOfStudy}{" "}
+                                </>
+                              )}
+                              {edu.grade && (
+                                <>
+                                  <strong>গ্রেডঃ</strong> {edu.grade}
+                                </>
+                              )}
+                            </p>
+                          )}
                         </div>
                       </div>
-                      {/* End Single List  */}
-                      {/* Start Single List  */}
-                      <div className="resume-single-list mt--30">
-                        <div className="inner psudo-after-none">
-                          <div className="heading">
-                            <div className="title">
-                              <h4>The Personal Portfolio Mystery</h4>
-                              <span>Job at Rainbow-Themes (2008 - 2016)</span>
-                            </div>
-                            <div className="date-of-time">
-                              <span>4.95/5</span>
-                            </div>
-                          </div>
-                          <p className="description">
-                            Generate Lorem Ipsum which looks. Ut tincidunt est
-                            ac dolor aliquam sodales. Phasellus sed mauris
-                            hendrerit, laoreet sem in, lobortis mauris hendrerit
-                            ante.
-                          </p>
-                        </div>
-                      </div>
-                      {/* End Single List  */}
-                    </div>
+                    );
+                  })
+                )}
+              </div>
+            </div>
+          </div>
+
+          {/* Job & Occupation Experience */}
+          <div className="col-12 mt_md--60 mt_sm--60">
+            <div className="content">
+              <span className="subtitle">পেশাগত বিবরণ</span>
+              <h4 className="maintitle">Job & Occupation Experience</h4>
+              <div className="experience-list padding-none border-none">
+                {occupationsList.length === 0 ? (
+                  <div className="p-4 text-center text-muted bg-light rounded mt-3">
+                    কোনো কর্মজীবনের তথ্য যোগ করা হয়নি।
                   </div>
-                </div>
-                {/* End Skill List Area  */}
+                ) : (
+                  occupationsList.map((job, idx) => {
+                    const titleName = job.title || job.designation || "পদবী";
+                    const orgName = job.organization || "প্রতিষ্ঠান";
+
+                    const startYear = job.startDate
+                      ? new Date(job.startDate).getFullYear()
+                      : job.startYear;
+                    const endYear = job.endDate
+                      ? new Date(job.endDate).getFullYear()
+                      : job.endYear;
+
+                    return (
+                      <div
+                        className="resume-single-list mt--30"
+                        key={job._id || idx}
+                      >
+                        <div className="inner psudo-after-none">
+                          <div className="heading">
+                            <div className="title">
+                              <h4>{titleName}</h4>
+                              <span>
+                                {orgName}
+                                {startYear
+                                  ? ` (${startYear} - ${
+                                      job.isCurrent
+                                        ? "বর্তমান"
+                                        : endYear || "চলমান"
+                                    })`
+                                  : ""}
+                              </span>
+                            </div>
+                            {job.location && (
+                              <div className="date-of-time">
+                                <span>{job.location}</span>
+                              </div>
+                            )}
+                          </div>
+                          {(job.responsibilities || job.location) && (
+                            <p className="description">
+                              {job.location && (
+                                <>
+                                  <strong>কর্মস্থলঃ</strong> {job.location}
+                                  <br />
+                                </>
+                              )}
+                              {job.responsibilities && (
+                                <>
+                                  <strong>দায়িত্বঃ</strong>{" "}
+                                  {job.responsibilities}
+                                </>
+                              )}
+                            </p>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })
+                )}
               </div>
             </div>
           </div>
         </div>
-        {/* resume area End */}
       </div>
     </div>
   );

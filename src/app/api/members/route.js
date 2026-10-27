@@ -29,7 +29,7 @@ export const GET = async () => {
       })
       .populate({
         path: "childrensIds",
-        select: "fullName",
+        select: "fullName gender profilePic",
       });
 
     // Safely populate fatherId and motherId only when they are valid ObjectIds

@@ -1,7 +1,7 @@
 export const navItems = [
   { name: "নিরপাতা", path: "/" },
   { name: "পরিবারের সদস্য", path: "/members" },
-  { name: "যোগাযোগ", path: "/contact" },
+  { name: "গুরুত্বপূর্ণ দিনসমূহ", path: "/important-days" },
   { name: "ড্যাশবোর্ড", path: "/dashboard" },
   { name: "লগইন", path: "/auth/login" },
 ];
