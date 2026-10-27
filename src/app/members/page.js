@@ -13,7 +13,7 @@ const page = async () => {
           <div className="row">
             <div className="col-lg-12">
               <div
-                className="section-title text-center aos-init aos-animate"
+                className="section-title text-center aos-init aos-animate pt--40"
                 data-aos="fade-up"
                 data-aos-duration="500"
                 data-aos-delay="100"

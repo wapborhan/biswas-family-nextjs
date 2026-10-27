@@ -53,6 +53,11 @@ export default function EditFamilyForm({ member, allMembers = [] }) {
         [],
 
       wedding: {
+        spouseId: member?.wedding?.spouseId
+          ? typeof member.wedding.spouseId === "object"
+            ? member.wedding.spouseId._id
+            : member.wedding.spouseId
+          : null,
         dateTime: member?.wedding?.dateTime
           ? new Date(member.wedding.dateTime)
           : null,
@@ -137,6 +142,10 @@ export default function EditFamilyForm({ member, allMembers = [] }) {
       childrensIds: formatIdList(data.childrensIds),
 
       wedding: {
+        spouseId:
+          typeof data.wedding?.spouseId === "object"
+            ? data.wedding?.spouseId?.value
+            : data.wedding?.spouseId || null,
         dateTime: data.wedding?.dateTime
           ? new Date(data.wedding.dateTime)
           : null,
@@ -338,8 +347,43 @@ export default function EditFamilyForm({ member, allMembers = [] }) {
         </div>
       </div>
 
-      {/* Wedding Date & Place */}
-      <div className="col-lg-6 col-12">
+      {/* Wedding Information */}
+      <div className="col-12 mt-4 pt-2 border-top">
+        <h5 className="text-dark font-weight-bold mb-1">
+          বিবাহের বিবরণ (Wedding Details)
+        </h5>
+        <p className="text-muted small mb-3">
+          বিবাহের তারিখ, স্থান ও সংশ্লিষ্ট জীবনসঙ্গী
+        </p>
+      </div>
+
+      <div className="col-lg-4 col-12">
+        <div className="form-group">
+          <label>সংশ্লিষ্ট জীবনসঙ্গী (Spouse)</label>
+          <Controller
+            name="wedding.spouseId"
+            control={control}
+            render={({ field }) => (
+              <GlobalSelect
+                {...field}
+                options={memberSelectOptions}
+                value={
+                  memberSelectOptions.find(
+                    (opt) => opt.value === (field.value?.value || field.value),
+                  ) || null
+                }
+                onChange={(selected) =>
+                  field.onChange(selected ? selected.value : null)
+                }
+                placeholder="জীবনসঙ্গী নির্বাচন করুন"
+                isClearable
+              />
+            )}
+          />
+        </div>
+      </div>
+
+      <div className="col-lg-4 col-12">
         <div className="form-group">
           <label>বিবাহের তারিখ</label>
           <Controller
@@ -362,13 +406,13 @@ export default function EditFamilyForm({ member, allMembers = [] }) {
         </div>
       </div>
 
-      <div className="col-lg-6 col-12">
+      <div className="col-lg-4 col-12">
         <div className="form-group">
           <label>বিবাহের স্থান</label>
           <input
             {...register("wedding.place")}
             className="form-control"
-            placeholder="বিবাহের স্থান"
+            placeholder="বিবাহের স্থান (গ্রাম/শহর)"
           />
         </div>
       </div>

@@ -74,13 +74,18 @@ const MembarCard = async ({ member }) => {
             <div className="category-info p-0">
               <div className="card-btn-container d-flex justify-content-between w-100">
                 <span className="btn card-btn" style={{ cursor: "default" }}>
-                  জন্মঃ {birth ? formatDate(birth?.date) : "অজানা"}
+                  জন্মঃ{" "}
+                  {birth?.dateTime || birth?.date
+                    ? formatDate(birth.dateTime || birth.date)
+                    : "অজানা"}
                 </span>
 
                 <span className="btn card-btn" style={{ cursor: "default" }}>
-                  {death?.date
-                    ? `মৃত্যুঃ ${formatDate(death?.date)}`
-                    : `বয়সঃ ${calculateAge(birth?.date)} বছর`}
+                  {death?.dateTime || death?.date
+                    ? `মৃত্যুঃ ${formatDate(death.dateTime || death.date)}`
+                    : death?.isDeceased
+                    ? "মৃত্যুঃ প্রয়াত"
+                    : `বয়সঃ ${calculateAge(birth?.dateTime || birth?.date)} বছর`}
                 </span>
               </div>
             </div>

@@ -33,6 +33,7 @@ export default function EditInfoForm({ member }) {
     register,
     handleSubmit,
     control,
+    watch,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -49,13 +50,19 @@ export default function EditInfoForm({ member }) {
         place: member?.birth?.place || "",
       },
       death: {
+        isDeceased: Boolean(
+          member?.death?.isDeceased || member?.death?.dateTime,
+        ),
         dateTime: member?.death?.dateTime
           ? new Date(member.death.dateTime)
           : null,
         place: member?.death?.place || "",
+        burialPlace: member?.death?.burialPlace || "",
       },
     },
   });
+
+  const isDeceased = watch("death.isDeceased");
 
   const onSubmit = async (data) => {
     setSubmitting(true);
@@ -77,8 +84,15 @@ export default function EditInfoForm({ member }) {
         place: data.birth?.place?.trim() || "",
       },
       death: {
-        dateTime: data.death?.dateTime ? new Date(data.death.dateTime) : null,
-        place: data.death?.place?.trim() || "",
+        isDeceased: Boolean(data.death?.isDeceased),
+        dateTime:
+          data.death?.isDeceased && data.death?.dateTime
+            ? new Date(data.death.dateTime)
+            : null,
+        place: data.death?.isDeceased ? data.death?.place?.trim() || "" : "",
+        burialPlace: data.death?.isDeceased
+          ? data.death?.burialPlace?.trim() || ""
+          : "",
       },
     };
 
@@ -289,40 +303,78 @@ export default function EditInfoForm({ member }) {
         </div>
       </div>
 
-      {/* Death Date & Place */}
-      <div className="col-lg-6 col-12">
-        <div className="form-group">
-          <label>মৃত্যুর তারিখ (যদি প্রযোজ্য)</label>
-          <Controller
-            name="death.dateTime"
-            control={control}
-            render={({ field }) => (
-              <DatePicker
-                selected={field.value ? new Date(field.value) : null}
-                onChange={(date) => field.onChange(date)}
-                dateFormat="dd/MM/yyyy"
-                placeholderText="মৃত্যুর তারিখ"
-                showYearDropdown
-                showMonthDropdown
-                dropdownMode="select"
-                className="form-control"
-                isClearable
-              />
-            )}
+      {/* Deceased Status Toggle */}
+      <div className="col-12 mt-3">
+        <div className="form-check form-switch p-3 bg-light rounded border">
+          <input
+            type="checkbox"
+            className="form-check-input ms-0 me-2"
+            id="isDeceased"
+            {...register("death.isDeceased")}
+            style={{ cursor: "pointer", width: "2em", height: "1.1em" }}
           />
+          <label
+            htmlFor="isDeceased"
+            className="form-check-label fw-bold text-dark ps-2"
+            style={{ cursor: "pointer" }}
+          >
+            সদস্য প্রয়াত / ইন্তেকাল করেছেন (Mark as Deceased)
+          </label>
+          <div className="text-muted small ps-2 mt-1">
+            সদস্য যদি মৃত্যুবরণ করে থাকেন তবে এটি সিলেক্ট করুন। মৃত্যুর সঠিক তারিখ জানা না থাকলেও প্রয়াত হিসেবে রেকর্ড থাকবে।
+          </div>
         </div>
       </div>
 
-      <div className="col-lg-6 col-12">
-        <div className="form-group">
-          <label>মৃত্যুর স্থান / সমাধিস্থল</label>
-          <input
-            {...register("death.place")}
-            className="form-control"
-            placeholder="মৃত্যুর স্থান বা কবরস্থান"
-          />
-        </div>
-      </div>
+      {/* Death Details (Conditional) */}
+      {isDeceased && (
+        <>
+          <div className="col-lg-4 col-12">
+            <div className="form-group">
+              <label>মৃত্যুর তারিখ (জানা থাকলে)</label>
+              <Controller
+                name="death.dateTime"
+                control={control}
+                render={({ field }) => (
+                  <DatePicker
+                    selected={field.value ? new Date(field.value) : null}
+                    onChange={(date) => field.onChange(date)}
+                    dateFormat="dd/MM/yyyy"
+                    placeholderText="মৃত্যুর তারিখ"
+                    showYearDropdown
+                    showMonthDropdown
+                    dropdownMode="select"
+                    className="form-control"
+                    isClearable
+                  />
+                )}
+              />
+            </div>
+          </div>
+
+          <div className="col-lg-4 col-12">
+            <div className="form-group">
+              <label>মৃত্যুর স্থান (Place of Death)</label>
+              <input
+                {...register("death.place")}
+                className="form-control"
+                placeholder="হাসপাতাল / শহর / দেশ"
+              />
+            </div>
+          </div>
+
+          <div className="col-lg-4 col-12">
+            <div className="form-group">
+              <label>দাফন / সমাধিস্থল (Burial / Cemetery)</label>
+              <input
+                {...register("death.burialPlace")}
+                className="form-control"
+                placeholder="পারিবারিক কবরস্থান / মাজার"
+              />
+            </div>
+          </div>
+        </>
+      )}
 
       {/* Submit Button */}
       <div className="col-12 mt-4 pt-3 border-top d-flex justify-content-end">

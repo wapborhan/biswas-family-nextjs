@@ -65,6 +65,7 @@ const MemberSchema = new Schema(
       trim: true,
     },
 
+    /* ================= Life Events ================= */
     birth: {
       dateTime: { type: Date, default: null },
       place: { type: String, trim: true },
@@ -73,11 +74,18 @@ const MemberSchema = new Schema(
     wedding: {
       dateTime: { type: Date, default: null },
       place: { type: String, trim: true },
+      spouseId: {
+        type: Schema.Types.ObjectId,
+        ref: "Member",
+        default: null,
+      },
     },
 
     death: {
+      isDeceased: { type: Boolean, default: false },
       dateTime: { type: Date, default: null },
       place: { type: String, trim: true },
+      burialPlace: { type: String, trim: true },
     },
 
     address: {

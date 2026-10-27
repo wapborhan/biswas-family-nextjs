@@ -24,6 +24,15 @@ export async function GET(req, { params }) {
     if (member?.motherId && mongoose.isValidObjectId(member.motherId)) {
       await Member.populate(member, { path: "motherId", select: "fullName" });
     }
+    if (
+      member?.wedding?.spouseId &&
+      mongoose.isValidObjectId(member.wedding.spouseId)
+    ) {
+      await Member.populate(member, {
+        path: "wedding.spouseId",
+        select: "fullName",
+      });
+    }
 
     if (!member) {
       return NextResponse.json(
