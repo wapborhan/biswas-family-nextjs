@@ -1,19 +1,44 @@
-import { fetchMembers } from "@/lib/fetchMembers";
-import EditInfo from "./EditInfo";
+import dbConnect from "@/lib/dbConnect";
+import Member from "@/Models/Member";
+import mongoose from "mongoose";
+import Link from "next/link";
+import EditInfoForm from "./EditInfoForm";
 
-const EditMemberPage = async ({ params }) => {
-  const { id } = await params;
-  const members = await fetchMembers();
-
-  const malemembers = members
-    ? members?.filter((member) => member.gender === "male")
-    : [];
-
-  return (
-    <>
-      <EditInfo members={members} malemembers={malemembers} />
-    </>
-  );
+export const metadata = {
+  title: "ব্যক্তিগত বিবরণ আপডেট",
 };
 
-export default EditMemberPage;
+const EditMemberInfoPage = async ({ params }) => {
+  const { id } = await params;
+
+  if (!id || !mongoose.Types.ObjectId.isValid(id)) {
+    return (
+      <div className="p-4 text-center">
+        <h5 className="text-danger">অবৈধ সদস্য আইডি</h5>
+        <Link href="/dashboard/members" className="btn btn-sm btn-primary mt-3">
+          সদস্য তালিকায় ফিরে যান
+        </Link>
+      </div>
+    );
+  }
+
+  await dbConnect();
+  const member = await Member.findById(id).lean();
+
+  if (!member) {
+    return (
+      <div className="p-4 text-center">
+        <h5 className="text-danger">সদস্য পাওয়া যায়নি</h5>
+        <Link href="/dashboard/members" className="btn btn-sm btn-primary mt-3">
+          সদস্য তালিকায় ফিরে যান
+        </Link>
+      </div>
+    );
+  }
+
+  const serializedMember = JSON.parse(JSON.stringify(member));
+
+  return <EditInfoForm member={serializedMember} />;
+};
+
+export default EditMemberInfoPage;
