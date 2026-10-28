@@ -25,6 +25,10 @@
   padding: 5px 15px;
 }
 
+.important-days-tabs .rn-nav-list .nav-item {
+  flex-basis: 25% !important;
+}
+
 .navs ul a[aria-current] {
   border-top: 1px solid #888;
   border-left: 1px solid #888;
@@ -35,7 +39,8 @@
 
 
 .white-version .owner img {
-  border: 5px solid #c3c3c3;
+  border: 2px solid #c3c3c3;
+  background: #fff;
 }
 
 .owner img {
@@ -390,15 +395,30 @@ select.react-datepicker__year-select {
 }
 
 .glass-effect {
-  background: radial-gradient(#fff2 30%, #fff4);
+  --webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  background: radial-gradient(#ffffff42 30%, #ffffff4a);
   border-radius: 20px;
-  box-shadow: 0 0 20px -5px #acacac77;
-  backdrop-filter: blur(5px);
-  overflow: hidden;
   transition: transform .25s;
+  overflow: hidden;
+  box-shadow: 0 0 20px -5px #acacac77;
 }
 
 .header-wrapper {
   height: 85px !important;
   margin-top: 15px;
+}
+
+.rn-portfolio .inner .owner {
+  position: absolute;
+  bottom: -40px;
+  left: 25px;
+}
+
+.rn-nav-list .nav-item {
+  margin-bottom: 0 !important;
+}
+
+.rn-nav-list .nav-item .nav-link {
+  font-family: inherit !important;
 }
